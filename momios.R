@@ -187,7 +187,7 @@ for(i in 1:(length(unique(scores$date))-170)){
                       min.date = unique(scores$date)[i], 
                       max.date = unique(scores$date)[i+170-1], 
                       silent = TRUE,
-                      time.weight.eta = 0.0005)
+                      time.weight.eta = 0.0005) ## 0 no weight, 0.1 los juegos mas recientes pesan mas, 0.0005 los juegos mas recientes no pesan
   pred <- predict(ranks, date = unique(scores$date)[i+170],
                   silent = TRUE)
   
@@ -198,28 +198,27 @@ for(i in 1:(length(unique(scores$date))-170)){
 }
 
 # Eliminamos NA's
-fu
+
 buenos <- !(is.na(phs) | is.na(pas)) # 
 phs <- phs[buenos] # predicted home score
 pas <- pas[buenos] # predicted away score
 pht <- pht[buenos] # home team in predictions
 pat <- pat[buenos] # away team in predictions
+unique(scores$date)[171]
 momio <- data %>% filter(date >= unique(scores$date)[171]) # momios conjunto de prueba
 momio <- momio[buenos,]
-mean(pht == momio$home.team); mean(pat == momio$away.team)
+mean(pht == momio$home.team); mean(pat == momio$away.team) ## da 1 porque son las medias de los equipos que jugaron????
 mean(phs + pas > 2.5 & momio$home.score + momio$away.score > 2.5)
 mean(phs + pas < 2.5 & momio$home.score + momio$away.score < 2.5)
 hs <- momio$home.score
 as <- momio$away.score
 
 # Probabilidades condicionales
-
 mean(phs + pas > 3) # proporción de partidos con más de tres goles según el modelo
-mean(phs + pas > 3 & hs + as > 2.5)/mean(phs + pas > 3) 
-# probabilidad condicional estimada de ganar en over 2.5
+mean(phs + pas > 3 & hs + as > 2.5)/mean(phs + pas > 3) # probabilidad condicional estimada de ganar en over 2.5
+
 mean(phs + pas < 2.1) # proporción de partidos con menos de 2.1 goles según el modelo
-mean(phs + pas < 2.1 & hs + as < 2.5)/mean(phs + pas < 2.1) 
-# probabilidad condicional estimada de ganar en under 2.5
+mean(phs + pas < 2.1 & hs + as < 2.5)/mean(phs + pas < 2.1) # probabilidad condicional estimada de ganar en under 2.5
 
 # Juegos con momios máximos
 
@@ -239,8 +238,9 @@ for(j in 1:length(phs)){
   }
 }
 
-# Escenario con momios máximos
 
+# Escenario con momios máximos
+g
 g <- data.frame(Num_Ap = 1:length(g), Capital = g)
 p <- ggplot(g, aes(x=Num_Ap, y=Capital)) + geom_line( color="purple") + geom_point() +
   labs(x = "Número de juego", 
