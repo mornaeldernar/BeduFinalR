@@ -1,7 +1,7 @@
 install.packages("remotes")
 library(remotes)
 install_github("cran/fbRanks")
-library(fbRanks)
+#library(fbRanks)
 library(dplyr)
 library(ggplot2)
 
