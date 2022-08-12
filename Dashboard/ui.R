@@ -9,6 +9,7 @@
 
 library(shiny)
 
+
 # Define UI for application that draws a histogram
 shinyUI(
   
@@ -18,13 +19,17 @@ shinyUI(
     headerPanel("Dashboard Football"),
     sidebarPanel(
       p("Graficas"),
+      selectInput("x", "Selecciona el eje de las X",      # Se indica que la variable "x" será la de entrada
+                  choices = colnames(select(match.data.csv,home.score,away.score)),
+      )
     ),
     
     # Sidebar with a slider input for number of bins
     mainPanel(
       tabsetPanel(
         tabPanel("Gráficos de barras", 
-                 h3("Gráficos de barras"),
+                 h3(textOutput("output_text")),
+                 plotOutput("output_plot"),
         ),
         tabPanel("Imagenes Postwork",
                  img(src = "goles_local.png",height=450,width=450),

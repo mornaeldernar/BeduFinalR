@@ -8,11 +8,19 @@
 #
 
 library(shiny)
+library(ggplot2)
+match.data.csv <- read.csv("www/match.data.csv", header = TRUE)
+match.data.csv$home.team <- factor(match.data.csv$home.team)
+match.data.csv$away.team <- factor(match.data.csv$away.team)
 
-# Define server logic required to draw a histogram
 shinyServer(function(input, output) {
-  
-  match.data.csv <- read.csv("www/match.data.csv", header = TRUE)
+  plot <- ggplot(match.data.csv, aes(x=input$x,y=home.team))+
+    geom_bar(stat="identity")+
+    facet_wrap(vars(away.team));
+  output$output_text <- renderText(paste("Grafico de goles como ",input$x))
+  output$output_plot <- renderPlot(
+    plot
+  )
   output$data_table <- renderDataTable(match.data.csv,options= list(aLengthMenu= c(10,20,50),iDisplayLength=10))
 
 })
