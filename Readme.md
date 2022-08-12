@@ -15,6 +15,9 @@ Para este postwork genera un dashboard en un solo archivo `app.R`, para esto rea
 - Almacena los gráficos resultantes en formato `png` [Listo]
 ![Momios Máximo](https://raw.githubusercontent.com/mornaeldernar/BeduFinalR/rafa/maximo_momios.png "Momios Máximos")
 
+
+![Momios Promedio](https://github.com/mornaeldernar/BeduFinalR/blob/rafa/momios_promedio.png "Momios Promedio")
+
 - Crea un dashboard donde se muestren los resultados con 4 pestañas:
    
 - Una pestaña con gráficas de barras, donde en el eje de las _X_ se muestren los goles de local y visitante, con un menu de selección (en _choices_ deben aparecer éstas variables), utiliza la geometría de tipo _barras_, además de hacer un facet_wrap con la variable de el _equipo visitante_
