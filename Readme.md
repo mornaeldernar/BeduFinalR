@@ -13,6 +13,7 @@ Para este postwork genera un dashboard en un solo archivo `app.R`, para esto rea
 - Ejecuta el código `momios.R` [Listo]
 
 - Almacena los gráficos resultantes en formato `png` [Listo]
+![Momios Máximo](https://raw.githubusercontent.com/mornaeldernar/BeduFinalR/rafa/maximo_momios.png "Momios Máximos")
 
 - Crea un dashboard donde se muestren los resultados con 4 pestañas:
    
