@@ -23,8 +23,8 @@ shinyUI(
     # Sidebar with a slider input for number of bins
     mainPanel(
       tabsetPanel(
-        tabPanel("Graficos de barras", 
-                 h3("Graficos de barras"),
+        tabPanel("Gráficos de barras", 
+                 h3("Gráficos de barras"),
         ),
         tabPanel("Imagenes Postwork",
                  img(src = "goles_local.png",height=450,width=450),
@@ -32,8 +32,11 @@ shinyUI(
                  img(src = "probabilidad_conjunta.png",height=450,width=450)
         ),
         tabPanel("Data Table",dataTableOutput("data_table")),
-        tabPanel("Grafico Factores",
-                 h3("Grafico Factores"),
+        tabPanel("Gráfico Factores",
+                 h3("Factores de ganancia promedio"),
+                 img(src = "momios_promedio.png",height=300,width="100%"),
+                 h3("Factores de ganancia máximo"),
+                 img(src = "maximo_momios.png",height=300,width="100%"),
         ),
       )
     )
