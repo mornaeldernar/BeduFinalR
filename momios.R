@@ -1,4 +1,6 @@
-
+install.packages("remotes")
+library(remotes)
+install_github("cran/fbRanks")
 library(fbRanks)
 library(dplyr)
 library(ggplot2)
@@ -7,7 +9,7 @@ library(ggplot2)
 
 # Colocar el directorio de trabajo según corresponda
 
-setwd("C:/Users/User/Documents/Bedu/Sesion 8/post/")
+setwd("D:/Prohoff/git/BeduFinalR")
 
 # Descarga de archivos
 # https://www.football-data.co.uk/spainm.php
@@ -24,24 +26,26 @@ u1819 <- "https://www.football-data.co.uk/mmz4281/1819/SP1.csv"
 u1920 <- "https://www.football-data.co.uk/mmz4281/1920/SP1.csv"
 
 #RawData <- "C:\\\"
-download.file(url = u1011, destfile ="SP1-1011.csv", mode = "wb")
-download.file(url = u1112, destfile ="SP1-1112.csv", mode = "wb")
-download.file(url = u1213, destfile ="SP1-1213.csv", mode = "wb")
-download.file(url = u1314, destfile ="SP1-1314.csv", mode = "wb")
-download.file(url = u1415, destfile ="SP1-1415.csv", mode = "wb")
-download.file(url = u1516, destfile ="SP1-1516.csv", mode = "wb")
-download.file(url = u1617, destfile ="SP1-1617.csv", mode = "wb")
-download.file(url = u1718, destfile ="SP1-1718.csv", mode = "wb")
-download.file(url = u1819, destfile ="SP1-1819.csv", mode = "wb")
-download.file(url = u1920, destfile ="SP1-1920.csv", mode = "wb")
+download.file(url = u1011, destfile ="data/SP1-1011.csv", mode = "wb")
+download.file(url = u1112, destfile ="data/SP1-1112.csv", mode = "wb")
+download.file(url = u1213, destfile ="data/SP1-1213.csv", mode = "wb")
+download.file(url = u1314, destfile ="data/SP1-1314.csv", mode = "wb")
+download.file(url = u1415, destfile ="data/SP1-1415.csv", mode = "wb")
+download.file(url = u1516, destfile ="data/SP1-1516.csv", mode = "wb")
+download.file(url = u1617, destfile ="data/SP1-1617.csv", mode = "wb")
+download.file(url = u1718, destfile ="data/SP1-1718.csv", mode = "wb")
+download.file(url = u1819, destfile ="data/SP1-1819.csv", mode = "wb")
 
 # Lectura de datos
 
-#lista <- lapply(list.files(path = RawData), read.csv)
+setwd("D:/Prohoff/git/BeduFinalR/data")
+lista <- lapply(list.files(path = "D:/Prohoff/git/BeduFinalR/data"), read.csv)
+
+download.file(url = u1920, destfile ="SP1-1920.csv", mode = "wb")
 
 # Procesamiento de datos
 
-#lista <- lapply(lista, select, Date:FTR)
+#lista <- lapply(lista, select, Date:FTR, BbMx.2.5:BbAv.2.5.1)
 
 d1011 <- read.csv("SP1-1011.csv")
 d1112 <- read.csv("SP1-1112.csv")
@@ -54,54 +58,53 @@ d1718 <- read.csv("SP1-1718.csv")
 d1819 <- read.csv("SP1-1819.csv")
 d1920 <- read.csv("SP1-1920.csv")
 
-d1011S <- select(d1011, Date:FTAG, BbMx.2.5:BbAv.2.5.1)
-d1112S <- select(d1112, Date:FTAG, BbMx.2.5:BbAv.2.5.1)
-d1213S <- select(d1213, Date:FTAG, BbMx.2.5:BbAv.2.5.1)
-d1314S <- select(d1314, Date:FTAG, BbMx.2.5:BbAv.2.5.1)
-d1415S <- select(d1415, Date:FTAG, BbMx.2.5:BbAv.2.5.1)
-d1516S <- select(d1516, Date:FTAG, BbMx.2.5:BbAv.2.5.1)
-d1617S <- select(d1617, Date:FTAG, BbMx.2.5:BbAv.2.5.1)
-d1718S <- select(d1718, Date:FTAG, BbMx.2.5:BbAv.2.5.1)
-d1819S <- select(d1819, Date:FTAG, BbMx.2.5:BbAv.2.5.1)
-d1920S <- select(d1920, Date:FTAG, Max.2.5:Avg.2.5.1)
-d1920S <- select(d1920S, -Time)
-#colnames(d1718S); colnames(d1819S); colnames(d1920S)
+d1011 <- select(d1011, Date:FTAG, BbMx.2.5:BbAv.2.5.1)
+d1112 <- select(d1112, Date:FTAG, BbMx.2.5:BbAv.2.5.1)
+d1213 <- select(d1213, Date:FTAG, BbMx.2.5:BbAv.2.5.1)
+d1314 <- select(d1314, Date:FTAG, BbMx.2.5:BbAv.2.5.1)
+d1415 <- select(d1415, Date:FTAG, BbMx.2.5:BbAv.2.5.1)
+d1516 <- select(d1516, Date:FTAG, BbMx.2.5:BbAv.2.5.1)
+d1617 <- select(d1617, Date:FTAG, BbMx.2.5:BbAv.2.5.1)
+d1718 <- select(d1718, Date:FTAG, BbMx.2.5:BbAv.2.5.1)
+d1819 <- select(d1819, Date:FTAG, BbMx.2.5:BbAv.2.5.1)
+d1920 <- select(d1920, Date:FTAG, Max.2.5:Avg.2.5.1)
+d1920 <- select(d1920, -Time)
+colnames(d1920)
 
 # Arreglamos las fechas
-d1011S <- mutate(d1011S, Date = as.Date(Date, format = "%d/%m/%y"))
-d1112S <- mutate(d1112S, Date = as.Date(Date, format = "%d/%m/%y"))
-d1213S <- mutate(d1213S, Date = as.Date(Date, format = "%d/%m/%y"))
-d1314S <- mutate(d1314S, Date = as.Date(Date, format = "%d/%m/%y"))
-d1415S <- mutate(d1415S, Date = as.Date(Date, format = "%d/%m/%y"))
-d1516S <- mutate(d1516S, Date = as.Date(Date, format = "%d/%m/%y"))
-d1617S <- mutate(d1617S, Date = as.Date(Date, format = "%d/%m/%y"))
-d1718S <- mutate(d1718S, Date = as.Date(Date, format = "%d/%m/%y"))
-d1819S <- mutate(d1819S, Date = as.Date(Date, format = "%d/%m/%Y"))
-d1920S <- mutate(d1920S, Date = as.Date(Date, format = "%d/%m/%Y"))
+d1011 <- mutate(d1011, Date = as.Date(Date, format = "%d/%m/%y"))
+d1112 <- mutate(d1112, Date = as.Date(Date, format = "%d/%m/%y"))
+d1213 <- mutate(d1213, Date = as.Date(Date, format = "%d/%m/%y"))
+d1314 <- mutate(d1314, Date = as.Date(Date, format = "%d/%m/%y"))
+d1415 <- mutate(d1415, Date = as.Date(Date, format = "%d/%m/%y"))
+d1516 <- mutate(d1516, Date = as.Date(Date, format = "%d/%m/%y"))
+d1617 <- mutate(d1617, Date = as.Date(Date, format = "%d/%m/%y"))
+d1718 <- mutate(d1718, Date = as.Date(Date, format = "%d/%m/%y"))
+d1819 <- mutate(d1819, Date = as.Date(Date, format = "%d/%m/%Y"))
+d1920 <- mutate(d1920, Date = as.Date(Date, format = "%d/%m/%Y"))
 
 # Unimos de d1415S a d1819S
 
-d1019S <- rbind(d1011S, d1112S, d1213S, d1314S, d1415S, d1516S, d1617S, d1718S, d1819S)
+d1019 <- rbind(d1011, d1112, d1213, d1314, d1415, d1516, d1617, d1718, d1819)
 
 # Renombrar columnas
-
-d1019S <- rename(d1019S,  Max.2.5.O = BbMx.2.5, 
+d1019 <- rename(d1019,  Max.2.5.O = BbMx.2.5, 
                  Avg.2.5.O = BbAv.2.5, 
                  Max.2.5.U = BbMx.2.5.1,
                  Avg.2.5.U = BbAv.2.5.1)
 
-d1920S <- rename(d1920S,  Max.2.5.O = Max.2.5, 
+d1920 <- rename(d1920,  Max.2.5.O = Max.2.5, 
                  Avg.2.5.O = Avg.2.5, 
                  Max.2.5.U = Max.2.5.1,
                  Avg.2.5.U = Avg.2.5.1)
 
 # Ordenamos las columnas
 
-d1019S <- select(d1019S, colnames(d1920S))
+d1019 <- select(d1019, colnames(d1920))
 
 # Volvemos a unir
 
-d1020S <- rbind(d1019S, d1920S)
+d1020S <- rbind(d1019, d1920)
 
 # Renombramos
 
@@ -114,27 +117,43 @@ data <- select(d1020S, date, home.team, home.score, away.team, away.score:Avg.2.
 head(data, n = 2L); tail(data, n = 2L)
 
 # Data frames de partidos y equipos
-
+setwd('D:/Prohoff/git/BeduFinalR')
 md <- data %>% select(date:away.score)
 write.csv(md, "match.data.csv", row.names = FALSE)
 df <- create.fbRanks.dataframes(scores.file = "match.data.csv")
 teams <- df$teams; scores <- df$scores
 
 head(teams, n = 2L); dim(teams); head(scores, n = 2L); dim(scores)
+####
+#### Tenemos 33 equipos y 3800 partidos desde el 2010 hasta el 2020
+####
 
 # Conjuntos iniciales de entrenamiento y de prueba
-
 f <- scores$date # Fechas de partidos
 fu <- unique(f) # Fechas sin repetición
+#####
+##### Hubo 1236 fechas en las que hubo partidos( en algunas fechas hubo varios partidos)
+#####
 Ym <- format(fu, "%Y-%m") # Meses y años
 Ym <- unique(Ym) # Meses y años sin repetir
+####
+#### Hubo partidos por 101 meses
+####
+format(scores$date, "%Y-%m")
+
+### No hay partidos entre los mese 06 y 07 en 2011 y 2012, 2014, 2015, 2016, 2017, 2018, 2019, ,
+### en 2013 no hay partidos en en el mes 07
+### en 2020 no hubo partidos en 04 y 05
+
+## Aqui se seleccionan los partidos de diciembre 2011-08 que fue el 15avo mes que jugaron
 places <- which(Ym[15]==format(scores$date, "%Y-%m")) # Consideramos partidos de 15 meses para comenzar a ajustar el modelo
 ffe <- scores$date[max(places)] # Fecha final conjunto de entrenamiento
+### se jugó en diciembre 2011 hasta el dia 18
+
 
 # Consideraremos partidos de 15 meses para comenzar a ajustar el modelo. Así, nuestro primer conjunto de entrenamiento consiste de datos de partidos hasta el `r ffe` 
-
-train <- scores %>% filter(date <= ffe)
-test <- scores %>% filter(date > ffe)
+train <- scores %>% filter(date <= ffe) ## entrenamos desde el inicio del dataset hasta el 18 de dic de 2011
+test <- scores %>% filter(date > ffe)   ## los datos posteriores a esa fecha, seran para el test
 
 head(train, n = 1); tail(train, n = 1)
 head(test, n = 1); tail(test, n = 1)
@@ -147,9 +166,12 @@ testdate <- unique(test$date)
 ranks <- rank.teams(scores = scores, teams = teams, 
                     min.date = traindate[1], 
                     max.date = traindate[length(traindate)])
+#######
+####### le da una puntuacion al equipo por ataque defensa y total, y numero de partidos
+
 
 # Primera predicción
-
+testdate[1]
 pred <- predict(ranks, date = testdate[1])
 
 phs <- pred$scores$pred.home.score # predicted home score
@@ -176,7 +198,7 @@ for(i in 1:(length(unique(scores$date))-170)){
 }
 
 # Eliminamos NA's
-
+fu
 buenos <- !(is.na(phs) | is.na(pas)) # 
 phs <- phs[buenos] # predicted home score
 pas <- pas[buenos] # predicted away score
