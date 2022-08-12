@@ -16,7 +16,7 @@ Para este postwork genera un dashboard en un solo archivo `app.R`, para esto rea
 ![Momios Máximo](https://raw.githubusercontent.com/mornaeldernar/BeduFinalR/rafa/maximo_momios.png "Momios Máximos")
 
 
-![Momios Promedio](https://github.com/mornaeldernar/BeduFinalR/blob/rafa/momios_promedio.png "Momios Promedio")
+![Momios Promedio](https://raw.githubusercontent.com/mornaeldernar/BeduFinalR/blob/rafa/momios_promedio.png "Momios Promedio")
 
 - Crea un dashboard donde se muestren los resultados con 4 pestañas:
    
