@@ -1,24 +1,22 @@
 
-# Postwork sesión 8. Dashboard 
+# Dashboard 
 
 #### OBJETIVO
 
 - Ejecutar el código. 
 - Observar el resultado de la toma de desiciones consecutivas, cuando estas se basan en datos históricos 
 
-#### REQUISITOS
-
-- Reproducir el código 
-- Haber realizado los postworks previos 
-- Analizar los gráficos resultantes
-
 #### DESARROLLO
 
 Para este postwork genera un dashboard en un solo archivo `app.R`, para esto realiza lo siguiente: 
 
-- Ejecuta el código `momios.R`
+- Ejecuta el código `momios.R` [Listo]
 
-- Almacena los gráficos resultantes en formato `png` 
+- Almacena los gráficos resultantes en formato `png` [Listo]
+![Momios Máximo](https://raw.githubusercontent.com/mornaeldernar/BeduFinalR/rafa/maximo_momios.png "Momios Máximos")
+
+
+![Momios Promedio](https://raw.githubusercontent.com/mornaeldernar/BeduFinalR/rafa/momios_promedio.png "Momios Promedio")
 
 - Crea un dashboard donde se muestren los resultados con 4 pestañas:
    
