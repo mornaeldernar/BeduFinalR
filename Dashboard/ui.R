@@ -30,33 +30,43 @@ shinyUI(
 tabItem(tabName= "dashboard",
         fluidRow(
           titlePanel("Dashboard"),
-              selectInput("x", "Selecciona el eje de las X",      # Se indica que la variable "x" será la de entrada
-                  choices = list("home.score","away.score")
+              box(
+                selectInput("x", "Selecciona el eje de las X",      # Se indica que la variable "x" será la de entrada
+                            choices = list("home.score","away.score")
+                ),
+                width = 12,
+                status = "warning"
               ),
-              plotOutput("output_plot"),
+              box(
+                title = "Gráfico",
+                width = 12,
+                solidHeader = TRUE,
+                background = "maroon",
+                plotOutput("output_plot")
+              ),
             ),
           ),
 tabItem(tabName = "postwork",
         fluidRow(
-          titlePanel("Postwork"),
-              img(src = "goles_local.png",height=450,width=450),
-              img(src = "goles_visitante.png",height=450,width=450),
-              img(src = "probabilidad_conjunta.png",height=450,width=450)
+          titlePanel("Probabilidades"),
+          box(img(src = "goles_local.png",height=450,width="100%"),status="warning", width=6),
+          box(img(src = "goles_visitante.png",height=450,width="100%"),status="primary", width=6),
+          box(img(src = "probabilidad_conjunta.png",height=450,width="100%"),status="danger", width=6),
             ),
           ),
 tabItem(tabName= "data_table",
         fluidRow(
           titlePanel("Data Table"),
-              dataTableOutput("data_table")
+              box(dataTableOutput("data_table"),width=12, status = "info")
             ),
           ),
 tabItem(tabName = "factores",
         fluidRow(
           titlePanel("Grafico Factores"),
-              h3("Factores de ganancia promedio"),
-              img(src = "momios_promedio.png",height=300,width="100%"),
-              h3("Factores de ganancia máximo"),
-              img(src = "maximo_momios.png",height=300,width="100%"),
+              box(title=("Factores de ganancia promedio"),
+              img(src = "momios_promedio.png",height=300,width="100%"),status="warning"),
+              box(title=("Factores de ganancia máximo"),
+              img(src = "maximo_momios.png",height=300,width="100%"), status="danger"),
             )
           )
         )
