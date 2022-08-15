@@ -1,0 +1,14 @@
+name: Dashboard
+title: Dashboard
+username:
+account: mornaeldernar
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 6778907
+bundleId: 6204469
+url: https://mornaeldernar.shinyapps.io/Dashboard/
+when: 1660605708.36149
+lastSyncTime: 1660605708.3615
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: .RData|loaddata.R

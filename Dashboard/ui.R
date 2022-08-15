@@ -29,11 +29,10 @@ shinyUI(
         tabItems(
 tabItem(tabName= "dashboard",
         fluidRow(
-          titlePanel("Dashboard"),
+          titlePanel("Goles a favor y en contra por equipo"),
               box(
-                selectInput("x", "Selecciona el eje de las X",      # Se indica que la variable "x" será la de entrada
-                            choices = list("home.score","away.score")
-                ),
+                selectInput("x", "Seleccione los goles",
+                            choices = c("local" = "home.score", "visitante" = "away.score")),
                 width = 12,
                 status = "warning"
               ),
