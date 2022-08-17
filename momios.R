@@ -1,7 +1,7 @@
 install.packages("remotes")
 library(remotes)
 install_github("cran/fbRanks")
-#library(fbRanks)
+library(fbRanks)
 library(dplyr)
 library(ggplot2)
 
@@ -178,6 +178,10 @@ phs <- pred$scores$pred.home.score # predicted home score
 pas <- pred$scores$pred.away.score # predicted away score
 pht <- pred$scores$home.team # home team in predictions
 pat <- pred$scores$away.team # away team in predictions
+phs
+pas
+pht
+pat
 
 # Continuar ajustando y prediciendo
 
@@ -187,7 +191,7 @@ for(i in 1:(length(unique(scores$date))-170)){
                       min.date = unique(scores$date)[i], 
                       max.date = unique(scores$date)[i+170-1], 
                       silent = TRUE,
-                      time.weight.eta = 0.0005) ## 0 no weight, 0.1 los juegos mas recientes pesan mas, 0.0005 los juegos mas recientes no pesan
+                      time.weight.eta = 0.0005) ## 0 no weight, 0.1 los juegos mas recientes pesan mas, 0.0005 los juegos mas recientes no pesan tanto
   pred <- predict(ranks, date = unique(scores$date)[i+170],
                   silent = TRUE)
   
@@ -196,6 +200,10 @@ for(i in 1:(length(unique(scores$date))-170)){
   pht <- c(pht, pred$scores$home.team) # home team in predictions
   pat <- c(pat, pred$scores$away.team) # away team in predictions
 }
+phs
+pas
+pht
+pat
 
 # Eliminamos NA's
 
@@ -204,10 +212,12 @@ phs <- phs[buenos] # predicted home score
 pas <- pas[buenos] # predicted away score
 pht <- pht[buenos] # home team in predictions
 pat <- pat[buenos] # away team in predictions
-unique(scores$date)[171]
-momio <- data %>% filter(date >= unique(scores$date)[171]) # momios conjunto de prueba
+fecha_prueba <- unique(scores$date)[171]
+
+momio <- data %>% filter( date >= fecha_prueba) # momios conjunto de prueba
 momio <- momio[buenos,]
 mean(pht == momio$home.team); mean(pat == momio$away.team) ## da 1 porque son las medias de los equipos que jugaron????
+mean(pht == momio$home.score); mean(pat == momio$away.score)
 mean(phs + pas > 2.5 & momio$home.score + momio$away.score > 2.5)
 mean(phs + pas < 2.5 & momio$home.score + momio$away.score < 2.5)
 hs <- momio$home.score
@@ -242,14 +252,18 @@ for(j in 1:length(phs)){
 # Escenario con momios máximos
 g
 g <- data.frame(Num_Ap = 1:length(g), Capital = g)
-p <- ggplot(g, aes(x=Num_Ap, y=Capital)) + geom_line( color="purple") + geom_point() +
+p <- ggplot(g, aes(x=Num_Ap, y=Capital)) +
+  geom_line( color="green") +
+  geom_point( color="darkgreen") +
   labs(x = "Número de juego", 
        y = "Capital",
        title = "Realizando una secuencia de juegos") +
   theme(plot.title = element_text(size=12))  +
-  theme(axis.text.x = element_text(face = "bold", color="blue" , size = 10, angle = 25, hjust = 1),
-        axis.text.y = element_text(face = "bold", color="blue" , size = 10, angle = 25, hjust = 1))  # color, ángulo y estilo de las abcisas y ordenadas 
+  theme(axis.text.x = element_text(face = "bold", color="darkgreen" , size = 10, angle = 25, hjust = 1),
+        axis.text.y = element_text(face = "bold", color="darkgreen" , size = 10, angle = 25, hjust = 1))  # color, ángulo y estilo de las abcisas y ordenadas 
 p
+
+mean(g$Capital) #El capital promedio invertido en maximos es de 44881.79
 
 # Escenario con momios promedio
 
@@ -270,11 +284,58 @@ for(j in 1:length(phs)){
 }
 
 g <- data.frame(Num_Ap = 1:length(g), Capital = g)
-p <- ggplot(g, aes(x=Num_Ap, y=Capital)) + geom_line( color="purple") + geom_point() +
+p <- ggplot(g, aes(x=Num_Ap, y=Capital)) + 
+  geom_line( color="green") + 
+  geom_point(color="darkgreen") +
   labs(x = "Número de juego", 
        y = "Capital",
        title = "Realizando una secuencia de juegos") +
   theme(plot.title = element_text(size=12))  +
-  theme(axis.text.x = element_text(face = "bold", color="blue" , size = 10, angle = 25, hjust = 1),
-        axis.text.y = element_text(face = "bold", color="blue" , size = 10, angle = 25, hjust = 1))  # color, ángulo y estilo de las abcisas y ordenadas 
+  theme(axis.text.x = element_text(face = "bold", color="darkgreen" , size = 10, angle = 25, hjust = 1),
+        axis.text.y = element_text(face = "bold", color="darkgreen" , size = 10, angle = 25, hjust = 1))  # color, ángulo y estilo de las abcisas y ordenadas 
 p
+
+mean(g$Capital) #El capital promedio invertido en promedio es de 29816.94
+
+#Paso 1 Planteamiento de hipotesis
+# h0 
+# h1
+hip <- 20000
+#Paso 2 Calcular estadistico de prueba
+media <- mean(g$Capital)
+ds <- sd(g$Capital)
+n <- length(g$Capital)
+t <- (media - hip)/(ds/sqrt(n))
+
+gl <- n-1
+#Paso 3: Calcular P value
+pvalue <- pt(t,df = gl, lower.tail = T)
+pvalue
+
+#Paso 4: seleccionar nivel de confianza y concluir
+# Usualmente se definen niveles de significancia estandar: 0.1 0.05, 0.01
+# si PValue < significancia, se rechaza H_nula
+
+test <- t.test(x=g$Capital, alternative = 'greater', mu=hip)
+test$p.value
+
+
+
+
+plot(g$Capital, type = "l", main="Caminata Aleatoria")
+acf(g$Capital, main="Correlograma de Capital")
+plot(diff(g$Capital))
+acf(diff(g$Capital), main="Detectar Model AR(p)")
+pacf(diff(g$Capital), main="Detectar modelo MA(q)")
+
+
+arima_model <- arima(g$Capital, order = c(2,1,4),
+      seas = list(order=c(2,1,4),12))
+arima_model$coef
+
+pred <- predict(arima_model,30)$pred
+pred
+ts.plot(cbind(g$Capital, pred), col = c("blue", "red"), xlab = "")
+title(main = "Time Series Prediction ARIMA(2,1,4)",
+      xlab = "Time",
+      ylab = "Total spending")

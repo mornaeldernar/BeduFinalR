@@ -17,6 +17,11 @@ shinyServer(function(input, output) {
   #transformamos en factor el home.team y away.team
   match.data.csv$home.team <- factor(match.data.csv$home.team)
   match.data.csv$away.team <- factor(match.data.csv$away.team)
+  match.data.csv.win <- match.data.csv %>% 
+      mutate(Ganador = case_when(home.score - away.score > 0 ~ "Local",home.score - away.score < 0 ~ "Visitante",TRUE ~ "Empate"))
+  visitantes <- length(match.data.csv.win[match.data.csv.win$Ganador == "Visitante",1])
+  locales <- length(match.data.csv.win[match.data.csv.win$Ganador == "Local",1])
+  empates <- length(match.data.csv.win[match.data.csv.win$Ganador == "Empate",1])
   
   output$output_text <- renderText(paste("Grafico de goles como ",input$x))
   output$output_plot <- renderPlot({
@@ -28,6 +33,15 @@ shinyServer(function(input, output) {
       theme(legend.position="left")+
       labs(x = input$x, y = "Frecuencia") 
   })
-  output$data_table <- renderDataTable(match.data.csv,options= list(aLengthMenu= c(10,20,50,100, dim(match.data.csv)[1]),iDisplayLength=10))
+  output$win_visitante <- renderText({
+    visitantes * 100 / (visitantes+empates+locales)
+  })
+  output$win_local <- renderText({
+    locales * 100 / (visitantes+empates+locales)
+  })
+  output$win_empate <- renderText({
+    empates * 100 / (visitantes+empates+locales)
+  })
+  output$data_table <- renderDataTable(match.data.csv.win,options= list(aLengthMenu= c(10,20,50,100, dim(match.data.csv)[1]),iDisplayLength=10))
 
 })

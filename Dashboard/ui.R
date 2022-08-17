@@ -37,6 +37,15 @@ shinyUI(
                     width = 12,
                     status = "success"
                   ),
+                  box(title ="Local",
+                      textOutput("win_local")
+                  ),
+                  box(title ="Visitante",
+                      textOutput("win_visitante")
+                  ),
+                  box(title ="Empate",
+                      textOutput("win_empate")
+                  ),
                   box(
                     title = "Gráfico",
                     width = 12,
