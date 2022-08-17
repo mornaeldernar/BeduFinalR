@@ -51,15 +51,15 @@ shinyUI(
                   titlePanel("Probabilidades Marginales"),
                   box(
                     title="Probabilidad marginal del número de goles que anota el equipo local",
-                    img(src = "goles_local.png",height=450,width="100%"),status="warning", width=6
+                    img(src = "gol_local.png",height=300,width=300),status="warning", width=6
                   ),
                   box(
                     
                     title="Probabilidad marginal del número de goles que anota el equipo visitante",
-                    img(src = "goles_visitante.png",height=450,width="100%"),status="primary", width=6),
+                    img(src = "goles_visitante_v.png",height=300,width=300),status="primary", width=6),
                   box(
                     title="Probabilidad conjunta de los goles que anotan el equipo local y visitante en un partido",
-                    img(src = "probabilidad_conjunta.png",height=450,width="100%"),status="danger", width=6),
+                    img(src = "probabilidad_conjuntas.png",height=300,width=400),status="danger", width=6),
                 ),
           ),
           tabItem(tabName= "data_table",
