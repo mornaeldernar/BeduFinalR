@@ -17,7 +17,7 @@ Para este postwork genera un dashboard en un solo archivo `app.R`, para esto rea
 - Crea un dashboard donde se muestren los resultados con 4 pestañas:
 
 vinculo al dashboard: https://mornaeldernar.shinyapps.io/Dashboard
-![Momios Máximo](https://raw.githubusercontent.com/mornaeldernar/BeduFinalR/rafa/maximo_momios.png "Momios Máximos")¿
+![[Momios Máximo](https://mornaeldernar.shinyapps.io/Dashboard)]([https://raw.githubusercontent.com/mornaeldernar/BeduFinalR/rafa/maximo_momios.png](https://raw.githubusercontent.com/mornaeldernar/BeduFinalR/rafa/qr.png) "Dashboard")
    
 - Una pestaña con gráficas de barras, donde en el eje de las _X_ se muestren los goles de local y visitante, con un menu de selección (en _choices_ deben aparecer éstas variables), utiliza la geometría de tipo _barras_, además de hacer un facet_wrap con la variable de el _equipo visitante_
    
