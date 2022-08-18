@@ -37,27 +37,27 @@ shinyUI(
                     width = 12,
                     status = "success"
                   ),
-                  box(title ="Local",
+                  box(title ="Ganadores como local",
                       fluidRow(
-                        column(3),
-                        column(4,h3(textOutput("win_local"))),
-                        column(3)
+                        column(5),
+                        column(2,h3(textOutput("win_local"))),
+                        column(5)
                       ),
                       background = "green",
                   ),
-                  box(title ="Visitante",
+                  box(title ="Ganadores como visitante",
                       fluidRow(
-                        column(3),
-                        column(4,h3(textOutput("win_visitante"))),
-                        column(3)
+                        column(5),
+                        column(2,h3(textOutput("win_visitante"))),
+                        column(5)
                       ),
                       background = "green",
                   ),
-                  box(title ="Empate",
+                  box(title ="Empates",
                       fluidRow(
-                        column(3),
-                        column(4,h3(textOutput("win_empate"))),
-                        column(3)
+                        column(5),
+                        column(2,h3(textOutput("win_empate"))),
+                        column(5)
                       ),
                       background = "green",
                   ),
