@@ -252,6 +252,10 @@ for(j in 1:length(phs)){
 # Escenario con momios máximos
 g
 g <- data.frame(Num_Ap = 1:length(g), Capital = g)
+
+df_means <- dataframe(mean(g$Capital))
+df_means$mean <- (mean(g$Capital))
+df_means
 p <- ggplot(g, aes(x=Num_Ap, y=Capital)) +
   geom_line( color="green") +
   geom_point( color="darkgreen") +
@@ -259,6 +263,9 @@ p <- ggplot(g, aes(x=Num_Ap, y=Capital)) +
        y = "Capital",
        title = "Realizando una secuencia de juegos") +
   theme(plot.title = element_text(size=12))  +
+  geom_hline(data=df_means, aes(yintercept=mean, color="Promedio"), linetype="dashed")+
+  
+  theme(legend.position="none")+
   theme(axis.text.x = element_text(face = "bold", color="darkgreen" , size = 10, angle = 25, hjust = 1),
         axis.text.y = element_text(face = "bold", color="darkgreen" , size = 10, angle = 25, hjust = 1))  # color, ángulo y estilo de las abcisas y ordenadas 
 p
@@ -282,17 +289,24 @@ for(j in 1:length(phs)){
     g <- c(g, cap)
   }
 }
-
+library(plyr)
 g <- data.frame(Num_Ap = 1:length(g), Capital = g)
+df_means$mean <- (mean(g$Capital))
+df_means 
 p <- ggplot(g, aes(x=Num_Ap, y=Capital)) + 
   geom_line( color="green") + 
   geom_point(color="darkgreen") +
   labs(x = "Número de juego", 
        y = "Capital",
        title = "Realizando una secuencia de juegos") +
+
   theme(plot.title = element_text(size=12))  +
   theme(axis.text.x = element_text(face = "bold", color="darkgreen" , size = 10, angle = 25, hjust = 1),
-        axis.text.y = element_text(face = "bold", color="darkgreen" , size = 10, angle = 25, hjust = 1))  # color, ángulo y estilo de las abcisas y ordenadas 
+        axis.text.y = element_text(face = "bold", color="darkgreen" , size = 10, angle = 25, hjust = 1))+
+  geom_hline(data=df_means, aes(yintercept=mean, color="Promedio"), linetype="dashed")+
+  
+  theme(legend.position="none")
+# color, ángulo y estilo de las abcisas y ordenadas 
 p
 
 mean(g$Capital) #El capital promedio invertido en promedio es de 29816.94

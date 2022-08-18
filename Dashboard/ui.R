@@ -38,13 +38,28 @@ shinyUI(
                     status = "success"
                   ),
                   box(title ="Local",
-                      textOutput("win_local")
+                      fluidRow(
+                        column(3),
+                        column(4,h3(textOutput("win_local"))),
+                        column(3)
+                      ),
+                      background = "green",
                   ),
                   box(title ="Visitante",
-                      textOutput("win_visitante")
+                      fluidRow(
+                        column(3),
+                        column(4,h3(textOutput("win_visitante"))),
+                        column(3)
+                      ),
+                      background = "green",
                   ),
                   box(title ="Empate",
-                      textOutput("win_empate")
+                      fluidRow(
+                        column(3),
+                        column(4,h3(textOutput("win_empate"))),
+                        column(3)
+                      ),
+                      background = "green",
                   ),
                   box(
                     title = "Gráfico",
@@ -79,11 +94,11 @@ shinyUI(
           ),
           tabItem(tabName = "factores",
                 fluidRow(
-                  titlePanel("Grafico de factores de ganancia promedio y máximo"),
+                  titlePanel("Gráfico de factores de ganancia promedio y máximo"),
                   box(title=("Factores de ganancia promedio"),
                       img(src = "momios_promedio.png",height=300,width="100%"),status="warning"),
                   box(title=("Factores de ganancia máximo"),
-                      img(src = "maximo_momios.png",height=300,width="100%"), status="danger"),
+                      img(src = "momios_maximo.png",height=300,width="100%"), status="danger"),
                 )
           ),
           tabItem(tabName = "equipo",

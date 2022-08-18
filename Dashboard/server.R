@@ -9,7 +9,9 @@
 
 library(shiny)
 library(ggplot2)
-library(dplyr)
+library(dplyr)                             # Install and load formattable
+                                 # Install and load scales
+library("scales")
 
 shinyServer(function(input, output) {
   #Cargamos los datos
@@ -34,13 +36,13 @@ shinyServer(function(input, output) {
       labs(x = input$x, y = "Frecuencia") 
   })
   output$win_visitante <- renderText({
-    visitantes * 100 / (visitantes+empates+locales)
+    scales::percent(round(visitantes / (visitantes+empates+locales),2))
   })
   output$win_local <- renderText({
-    locales * 100 / (visitantes+empates+locales)
+    scales::percent(round(locales  / (visitantes+empates+locales),2))
   })
   output$win_empate <- renderText({
-    empates * 100 / (visitantes+empates+locales)
+    scales::percent(round(empates  / (visitantes+empates+locales),2))
   })
   output$data_table <- renderDataTable(match.data.csv.win,options= list(aLengthMenu= c(10,20,50,100, dim(match.data.csv)[1]),iDisplayLength=10))
 
