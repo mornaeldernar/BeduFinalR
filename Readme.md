@@ -10,15 +10,14 @@
 
 Para este postwork genera un dashboard en un solo archivo `app.R`, para esto realiza lo siguiente: 
 
-- Ejecuta el código `momios.R` [Listo]
+- Ejecuta el código `momios.R` 
 
-- Almacena los gráficos resultantes en formato `png` [Listo]
-![Momios Máximo](https://raw.githubusercontent.com/mornaeldernar/BeduFinalR/rafa/maximo_momios.png "Momios Máximos")
-
-
-![Momios Promedio](https://raw.githubusercontent.com/mornaeldernar/BeduFinalR/rafa/momios_promedio.png "Momios Promedio")
+- Almacena los gráficos resultantes en formato `png` 
+![Momios Máximo](https://raw.githubusercontent.com/mornaeldernar/BeduFinalR/rafa/maximo_momios.png "Momios Máximos")¿
 
 - Crea un dashboard donde se muestren los resultados con 4 pestañas:
+
+vinculo al dashboard: https://mornaeldernar.shinyapps.io/Dashboard
    
 - Una pestaña con gráficas de barras, donde en el eje de las _X_ se muestren los goles de local y visitante, con un menu de selección (en _choices_ deben aparecer éstas variables), utiliza la geometría de tipo _barras_, además de hacer un facet_wrap con la variable de el _equipo visitante_
    
@@ -28,8 +27,15 @@ Para este postwork genera un dashboard en un solo archivo `app.R`, para esto rea
     
 - Por último en otra pestaña agrega las imágenes de las gráficas de los factores de ganancia promedio y máximo
 
-Nota: recuerda que si tienes problemas con el codificado guarda tu archivo `app.R` con la codificación `UTF-8`
-
 __Notas para los datos de soccer:__ https://www.football-data.co.uk/notes.txt
+
+### Equipo
+   - Alef Zain Gama Sandoval
+   - Arturo Solís
+   - Jacob Muñoz
+   - Javier Castillo
+   - Rafael Jiménez Orozco
+   
+
 
 
