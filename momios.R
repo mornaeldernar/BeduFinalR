@@ -1,6 +1,5 @@
-install.packages("remotes")
+
 library(remotes)
-install_github("cran/fbRanks")
 library(fbRanks)
 library(dplyr)
 library(ggplot2)
@@ -375,7 +374,7 @@ bal
 bav <- match.data.csv.win %>% filter(home.team == "Barcelona")
 bav
 
-
+ranks
 goles_local <- match.data.csv %>% group_by(home.team) %>% summarise(goles_local = sum(home.score), .groups = 'drop')
 goles_visitante <- match.data.csv %>% group_by(away.team) %>% summarise(goles_visitante = sum(away.score), .groups = 'drop')
 
@@ -392,5 +391,49 @@ goles <- goles %>% mutate(contra = goles_visitante / goles_visitante_en_contra)
 goles <- goles %>% mutate(l = (goles_local+goles_visitante))
 goles <- goles %>% mutate(v = (goles_local_en_contra+goles_visitante_en_contra))
 goles <- goles %>% mutate(diferencia = (goles_local+goles_visitante)/(goles_local_en_contra+goles_visitante_en_contra))
-goles <- goles %>% arrange(desc(diferencia))
-goles
+goles <- goles %>% mutate(diferencia_goles = (goles_local+goles_visitante)-(goles_local_en_contra+goles_visitante_en_contra))
+goles <- goles %>% mutate(diferencia_goles_lv = (goles_local-goles_visitante))
+goles <- goles %>% arrange(desc(diferencia_goles))
+
+
+
+
+##################################################################
+
+Ym[100]
+places <- which(Ym[100]==format(scores$date, "%Y-%m"))
+places
+eval <- match.data.csv.win[places,]
+
+
+bin <- seq(min(match.data.csv.win$diferencia), max(match.data.csv.win$diferencia), length.out = 16)
+ggplot(match.data.csv.win,aes(diferencia))+
+  geom_histogram(breaks=bin)+
+  theme(legend.position="left")+
+  labs(x = "goles", y = "Frecuencia") 
+
+mean(match.data.csv.win$diferencia)
+#Paso 1 Panteamiento de hipotesis
+# h0 el local pierda por diferencia de 1 gol o mas
+# h1 el local no pierda por diferencia de 1 gol o mas
+hip <- -1
+valores <- eval$diferencia
+#Paso 2 Calcular estadistico de prueba
+(media <-mean(valores))
+(ds <- sd(valores))
+(n <- length(valores))
+(t <- (media - hip)/(ds/sqrt(n)))
+(gl <- n-1)
+#Paso 3: Calcular P value
+pvalue <- pt(t,df = gl, lower.tail = T)
+pvalue
+
+#Paso 4: seleccionar nivel de confianza y concluir
+# Usualmente se definen niveles de significancia estandar: 0.1 0.05, 0.01
+# si PValue < significancia, se rechaza H_nula
+
+test <- t.test(x=valores, alternative = 'less', mu=hip)
+test$p.value
+test
+
+

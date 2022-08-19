@@ -14,7 +14,7 @@ library(shinythemes)
 
 # Define UI for application that draws a histogram
 shinyUI(
-  fluidPage(
+  fluidPage(theme = "mytheme.css",
     dashboardPage(
       dashboardHeader(title =  "Football"),
       dashboardSidebar(
@@ -112,8 +112,7 @@ shinyUI(
               )
           )
         )
-      ),
-      skin = "green"
+      )
     )
   )
 )

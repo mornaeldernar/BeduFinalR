@@ -1,0 +1,69 @@
+
+.skin-blue .main-header .logo {
+    background-color: #FD6A3E;
+}
+.skin-blue .main-header .navbar {
+    background-color: #FD6A3E;
+}
+.skin-blue .main-header .navbar .sidebar-toggle:hover {
+    background-color: #FE8A68;
+}
+.skin-blue .main-header .logo:hover {
+    background-color: #FE8A68;
+}
+.box {
+    border-top-color: #FD6A3E;
+}
+.box.box-primary {
+    border-top-color: #FD6A3E;
+}
+.box.box-success {
+    border-top-color: #FD6A3E;
+    color: #254152;
+}
+.box.box-warning {
+    border-top-color: #FD6A3E;
+}
+.box.box-danger {
+    border-top-color: #FD6A3E;
+}
+.box.box-info {
+    border-top-color: #FD6A3E;
+}
+
+.bg-green { 
+    background-color: #FD6A3E!important;
+}
+.skin-blue .left-side, .skin-blue .main-sidebar, .skin-blue .wrapper {
+    background-color: #FD6A3E;
+    color: #254152;
+}
+.skin-blue .sidebar-menu>li.active>a, .skin-blue .sidebar-menu>li:hover>a {
+    color: #254152;
+    background: #FCE5DE!important;
+    border-left-color: #254152;
+}
+.skin-blue .sidebar a {
+    color: #254152;
+}
+h2 {
+    margin-left: 15px;
+    color: #254152;
+}
+.box-header {
+    text-align: center;
+    color: #254152;
+    font-weight: bold;
+}
+.pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover {
+    background-color: #FD6A3E;
+    border-color: #FE8A68;
+}
+.pagination>li>a:hover {
+    background-color: #FCE5DE;
+    border-color: #FCE5DE;
+}
+thead {
+    background: #FD6A3E;
+    color: #FCE5DE;
+}
