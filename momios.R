@@ -166,6 +166,8 @@ testdate <- unique(test$date)
 ranks <- rank.teams(scores = scores, teams = teams, 
                     min.date = traindate[1], 
                     max.date = traindate[length(traindate)])
+ranks
+coef(ranks)
 #######
 ####### le da una puntuacion al equipo por ataque defensa y total, y numero de partidos
 
@@ -353,3 +355,42 @@ ts.plot(cbind(g$Capital, pred), col = c("blue", "red"), xlab = "")
 title(main = "Time Series Prediction ARIMA(2,1,4)",
       xlab = "Time",
       ylab = "Total spending")
+
+
+match.data.csv <- read.csv("match.data.csv", header = TRUE)
+#transformamos en factor el home.team y away.team
+match.data.csv$home.team <- factor(match.data.csv$home.team)
+match.data.csv$away.team <- factor(match.data.csv$away.team)
+match.data.csv.win <- match.data.csv %>% 
+  mutate(Ganador = case_when(home.score - away.score > 0 ~ "Local",home.score - away.score < 0 ~ "Visitante",TRUE ~ "Empate"))
+library(tidyverse)
+
+datos <- match.data.csv.win %>% filter(home.team == "Real Madrid" | home.team == "Barcelona" | away.team == "Real Madrid" | away.team == "Barcelona" )
+rml <- match.data.csv.win %>% filter(home.team == "Real Madrid")
+rml
+rmv <- match.data.csv.win %>% filter(away.team == "Real Madrid")
+rmv
+bal <- match.data.csv.win %>% filter(home.team == "Barcelona")
+bal
+bav <- match.data.csv.win %>% filter(home.team == "Barcelona")
+bav
+
+
+goles_local <- match.data.csv %>% group_by(home.team) %>% summarise(goles_local = sum(home.score), .groups = 'drop')
+goles_visitante <- match.data.csv %>% group_by(away.team) %>% summarise(goles_visitante = sum(away.score), .groups = 'drop')
+
+goles_local_encontra <- match.data.csv %>% group_by(home.team) %>% summarise(goles_local_en_contra = sum(away.score), .groups = 'drop')
+goles_visitante_encontra <- match.data.csv %>% group_by(away.team) %>% summarise(goles_visitante_en_contra = sum(home.score), .groups = 'drop')
+goles_visitante <- select(goles_visitante, -away.team)
+goles_local_encontra <- select(goles_local_encontra, -home.team)
+goles_visitante_encontra <- select(goles_visitante_encontra, -away.team)
+goles <- c()
+goles <- cbind(goles_local, goles_visitante,goles_local_encontra,goles_visitante_encontra)
+goles$goles_visitante_en_contra
+goles <- goles %>% mutate(favor = goles_local / goles_local_en_contra)
+goles <- goles %>% mutate(contra = goles_visitante / goles_visitante_en_contra)
+goles <- goles %>% mutate(l = (goles_local+goles_visitante))
+goles <- goles %>% mutate(v = (goles_local_en_contra+goles_visitante_en_contra))
+goles <- goles %>% mutate(diferencia = (goles_local+goles_visitante)/(goles_local_en_contra+goles_visitante_en_contra))
+goles <- goles %>% arrange(desc(diferencia))
+goles
