@@ -253,13 +253,12 @@ for(j in 1:length(phs)){
 # Escenario con momios máximos
 g
 g <- data.frame(Num_Ap = 1:length(g), Capital = g)
-
-df_means <- dataframe(mean(g$Capital))
+df_means <- (g)
 df_means$mean <- (mean(g$Capital))
 df_means
 p <- ggplot(g, aes(x=Num_Ap, y=Capital)) +
-  geom_line( color="green") +
-  geom_point( color="darkgreen") +
+  geom_line( color="#FD6A3E") +
+  geom_point( color="#FE8A68") +
   labs(x = "Número de juego", 
        y = "Capital",
        title = "Realizando una secuencia de juegos") +
@@ -267,8 +266,8 @@ p <- ggplot(g, aes(x=Num_Ap, y=Capital)) +
   geom_hline(data=df_means, aes(yintercept=mean, color="Promedio"), linetype="dashed")+
   
   theme(legend.position="none")+
-  theme(axis.text.x = element_text(face = "bold", color="darkgreen" , size = 10, angle = 25, hjust = 1),
-        axis.text.y = element_text(face = "bold", color="darkgreen" , size = 10, angle = 25, hjust = 1))  # color, ángulo y estilo de las abcisas y ordenadas 
+  theme(axis.text.x = element_text(face = "bold", size = 10, angle = 25, hjust = 1),
+        axis.text.y = element_text(face = "bold", size = 10, angle = 25, hjust = 1))  # color, ángulo y estilo de las abcisas y ordenadas 
 p
 
 mean(g$Capital) #El capital promedio invertido en maximos es de 44881.79
@@ -295,15 +294,15 @@ g <- data.frame(Num_Ap = 1:length(g), Capital = g)
 df_means$mean <- (mean(g$Capital))
 df_means 
 p <- ggplot(g, aes(x=Num_Ap, y=Capital)) + 
-  geom_line( color="green") + 
-  geom_point(color="darkgreen") +
+  geom_line( color="#FE8A68") + 
+  geom_point(color="#FD6A3E") +
   labs(x = "Número de juego", 
        y = "Capital",
        title = "Realizando una secuencia de juegos") +
 
   theme(plot.title = element_text(size=12))  +
-  theme(axis.text.x = element_text(face = "bold", color="darkgreen" , size = 10, angle = 25, hjust = 1),
-        axis.text.y = element_text(face = "bold", color="darkgreen" , size = 10, angle = 25, hjust = 1))+
+  theme(axis.text.x = element_text(face = "bold", size = 10, angle = 25, hjust = 1),
+        axis.text.y = element_text(face = "bold",  size = 10, angle = 25, hjust = 1))+
   geom_hline(data=df_means, aes(yintercept=mean, color="Promedio"), linetype="dashed")+
   
   theme(legend.position="none")
