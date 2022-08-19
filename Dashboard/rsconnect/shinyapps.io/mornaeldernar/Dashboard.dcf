@@ -5,10 +5,10 @@ account: mornaeldernar
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 6778907
-bundleId: 6218967
+bundleId: 6219338
 url: https://mornaeldernar.shinyapps.io/Dashboard/
-when: 1660935486.03444
-lastSyncTime: 1660935486.03446
+when: 1660944170.66718
+lastSyncTime: 1660944170.6672
 asMultiple: FALSE
 asStatic: FALSE
 ignoredFiles: .RData|loaddata.R

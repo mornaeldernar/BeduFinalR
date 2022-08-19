@@ -68,3 +68,12 @@ thead {
     background: #FD6A3E;
     color: #FCE5DE;
 }
+
+.box.box-solid.box-primary {
+    border: 1px solid #FD6A3E!important;
+}
+.box.box-solid.box-primary>.box-header {
+    color: #fff;
+    background: #FD6A3E!important;
+    background-color: #FD6A3E!important;
+}

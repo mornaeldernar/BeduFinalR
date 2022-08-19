@@ -64,8 +64,8 @@ shinyUI(
                   box(
                     title = "Gráfico",
                     width = 12,
+                    status="primary",
                     solidHeader = TRUE,
-                    background = "green",
                     plotOutput("output_plot")
                   ),
                 ),
