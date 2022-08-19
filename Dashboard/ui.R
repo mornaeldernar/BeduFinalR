@@ -23,6 +23,7 @@ shinyUI(
           menuItem("Probabilidades", tabName = "postwork", icon = icon("chart-column")),
           menuItem("Data Table", tabName = "data_table", icon = icon("table")),
           menuItem("Gráfico de factores", tabName = "factores", icon = icon("chart-line")),
+          menuItem("Hipotesis", tabName = "hipotesis", icon = icon("header")),
           menuItem("Equipo", tabName = "equipo", icon = icon("users"))
         )
       ),
@@ -31,12 +32,6 @@ shinyUI(
           tabItem(tabName= "dashboard",
                 fluidRow(
                   titlePanel("Goles a favor y en contra por equipo"),
-                  box(
-                    selectInput("x", "Seleccione los goles",
-                                choices = c("local" = "home.score", "visitante" = "away.score")),
-                    width = 12,
-                    status = "success"
-                  ),
                   box(title ="Ganadores como local",
                       fluidRow(
                         column(5),
@@ -60,6 +55,12 @@ shinyUI(
                         column(5)
                       ),
                       background = "green",
+                  ),
+                  box(
+                    selectInput("x", "Seleccione los goles",
+                                choices = c("local" = "home.score", "visitante" = "away.score")),
+                    width = 12,
+                    status = "success"
                   ),
                   box(
                     title = "Gráfico",
@@ -99,6 +100,16 @@ shinyUI(
                       img(src = "momios_promedio.png",height=300,width="100%"),status="warning"),
                   box(title=("Factores de ganancia máximo"),
                       img(src = "momios_maximo.png",height=300,width="100%"), status="danger"),
+                )
+          ),
+          
+          tabItem(tabName = "hipotesis",
+                fluidRow(
+                  titlePanel("Prueba de hipótesis"),
+                  box(title=("Factores de ganancia máximo"),
+                      img(src = "winratecharts.png",height=300,width="100%"), status="danger"),
+                  box(
+                      img(src = "codigo.png",height=300,width="100%"), status="danger"),
                 )
           ),
           tabItem(tabName = "equipo",
