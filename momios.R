@@ -1,141 +1,211 @@
-
+################################
+# INSTALAR Y EJECUTAR LIBRERI-AS
+################################
+install.packages("remotes")
 library(remotes)
+install_github("cran/fbRanks")
 library(fbRanks)
 library(dplyr)
 library(ggplot2)
 
 
 
-# Colocar el directorio de trabajo según corresponda
+################################
+# SITUAR DIRECTORIO DE TRABAJO
+################################
 
-setwd("D:/Prohoff/git/BeduFinalR")
+#setwd("D:/Prohoff/git/BeduFinalR")
+setwd("D:/OneDrive/Programación - Code/BEDU. Data Análisis/Fase 2/R/BeduFinalR")
 
-# Descarga de archivos
-# https://www.football-data.co.uk/spainm.php
 
-u1011 <- "https://www.football-data.co.uk/mmz4281/1011/SP1.csv"
-u1112 <- "https://www.football-data.co.uk/mmz4281/1112/SP1.csv"
-u1213 <- "https://www.football-data.co.uk/mmz4281/1213/SP1.csv"
-u1314 <- "https://www.football-data.co.uk/mmz4281/1314/SP1.csv"
-u1415 <- "https://www.football-data.co.uk/mmz4281/1415/SP1.csv"
-u1516 <- "https://www.football-data.co.uk/mmz4281/1516/SP1.csv"
-u1617 <- "https://www.football-data.co.uk/mmz4281/1617/SP1.csv"
-u1718 <- "https://www.football-data.co.uk/mmz4281/1718/SP1.csv"
-u1819 <- "https://www.football-data.co.uk/mmz4281/1819/SP1.csv"
-u1920 <- "https://www.football-data.co.uk/mmz4281/1920/SP1.csv"
 
-#RawData <- "C:\\\"
-download.file(url = u1011, destfile ="data/SP1-1011.csv", mode = "wb")
-download.file(url = u1112, destfile ="data/SP1-1112.csv", mode = "wb")
-download.file(url = u1213, destfile ="data/SP1-1213.csv", mode = "wb")
-download.file(url = u1314, destfile ="data/SP1-1314.csv", mode = "wb")
-download.file(url = u1415, destfile ="data/SP1-1415.csv", mode = "wb")
-download.file(url = u1516, destfile ="data/SP1-1516.csv", mode = "wb")
-download.file(url = u1617, destfile ="data/SP1-1617.csv", mode = "wb")
-download.file(url = u1718, destfile ="data/SP1-1718.csv", mode = "wb")
-download.file(url = u1819, destfile ="data/SP1-1819.csv", mode = "wb")
+################################
+# DESCARGAR ARCHIVOS CSV EN CARPETA /DATA
+#   https://www.football-data.co.uk/spainm.php
+################################
+download.file("https://www.football-data.co.uk/mmz4281/1011/SP1.csv", 
+              destfile ="data/SP1-1011.csv", mode = "wb")
+download.file("https://www.football-data.co.uk/mmz4281/1112/SP1.csv", 
+              destfile ="data/SP1-1112.csv", mode = "wb")
+download.file("https://www.football-data.co.uk/mmz4281/1213/SP1.csv", 
+              destfile ="data/SP1-1213.csv", mode = "wb")
+download.file("https://www.football-data.co.uk/mmz4281/1314/SP1.csv", 
+              destfile ="data/SP1-1314.csv", mode = "wb")
+download.file("https://www.football-data.co.uk/mmz4281/1415/SP1.csv", 
+              destfile ="data/SP1-1415.csv", mode = "wb")
+download.file("https://www.football-data.co.uk/mmz4281/1516/SP1.csv", 
+              destfile ="data/SP1-1516.csv", mode = "wb")
+download.file("https://www.football-data.co.uk/mmz4281/1617/SP1.csv", 
+              destfile ="data/SP1-1617.csv", mode = "wb")
+download.file("https://www.football-data.co.uk/mmz4281/1718/SP1.csv", 
+              destfile ="data/SP1-1718.csv", mode = "wb")
+download.file("https://www.football-data.co.uk/mmz4281/1819/SP1.csv", 
+              destfile ="data/SP1-1819.csv", mode = "wb")
+download.file("https://www.football-data.co.uk/mmz4281/1920/SP1.csv", 
+              destfile ="data/SP1-1920.csv", mode = "wb")
 
-# Lectura de datos
 
-setwd("D:/Prohoff/git/BeduFinalR/data")
-lista <- lapply(list.files(path = "D:/Prohoff/git/BeduFinalR/data"), read.csv)
 
-download.file(url = u1920, destfile ="SP1-1920.csv", mode = "wb")
+################################
+# LECTURA DE DATOS
+################################
 
-# Procesamiento de datos
+## Cambiar directorio
+#setwd("D:/Prohoff/git/BeduFinalR/data")
+setwd("D:/OneDrive/Programación - Code/BEDU. Data Análisis/Fase 2/R/BeduFinalR/data")
 
-#lista <- lapply(lista, select, Date:FTR, BbMx.2.5:BbAv.2.5.1)
+## Corregir nombres de columnas del último archivo para que sean iguales
+##    CUIDADO al correr el código sobre el csv ya previamente modificado
+SP1920 <- read.csv('SP1-1920.csv')
+colnames(SP1920)
+SP1920 <- rename(SP1920,  
+                 BbMx.2.5 = Max.2.5, 
+                 BbAv.2.5 = Avg.2.5,
+                 BbMx.2.5.1 = Max.2.5.1,
+                 BbAv.2.5.1 = Avg.2.5.1)
+SP1920 <- select(SP1920, -Time)
+colnames(SP1920)
+write.csv(SP1920, file = 'SP1-1920.csv')
 
-d1011 <- read.csv("SP1-1011.csv")
-d1112 <- read.csv("SP1-1112.csv")
-d1213 <- read.csv("SP1-1213.csv")
-d1314 <- read.csv("SP1-1314.csv")
-d1415 <- read.csv("SP1-1415.csv")
-d1516 <- read.csv("SP1-1516.csv")
-d1617 <- read.csv("SP1-1617.csv")
-d1718 <- read.csv("SP1-1718.csv")
-d1819 <- read.csv("SP1-1819.csv")
-d1920 <- read.csv("SP1-1920.csv")
 
-d1011 <- select(d1011, Date:FTAG, BbMx.2.5:BbAv.2.5.1)
-d1112 <- select(d1112, Date:FTAG, BbMx.2.5:BbAv.2.5.1)
-d1213 <- select(d1213, Date:FTAG, BbMx.2.5:BbAv.2.5.1)
-d1314 <- select(d1314, Date:FTAG, BbMx.2.5:BbAv.2.5.1)
-d1415 <- select(d1415, Date:FTAG, BbMx.2.5:BbAv.2.5.1)
-d1516 <- select(d1516, Date:FTAG, BbMx.2.5:BbAv.2.5.1)
-d1617 <- select(d1617, Date:FTAG, BbMx.2.5:BbAv.2.5.1)
-d1718 <- select(d1718, Date:FTAG, BbMx.2.5:BbAv.2.5.1)
-d1819 <- select(d1819, Date:FTAG, BbMx.2.5:BbAv.2.5.1)
-d1920 <- select(d1920, Date:FTAG, Max.2.5:Avg.2.5.1)
-d1920 <- select(d1920, -Time)
-colnames(d1920)
 
-# Arreglamos las fechas
-d1011 <- mutate(d1011, Date = as.Date(Date, format = "%d/%m/%y"))
-d1112 <- mutate(d1112, Date = as.Date(Date, format = "%d/%m/%y"))
-d1213 <- mutate(d1213, Date = as.Date(Date, format = "%d/%m/%y"))
-d1314 <- mutate(d1314, Date = as.Date(Date, format = "%d/%m/%y"))
-d1415 <- mutate(d1415, Date = as.Date(Date, format = "%d/%m/%y"))
-d1516 <- mutate(d1516, Date = as.Date(Date, format = "%d/%m/%y"))
-d1617 <- mutate(d1617, Date = as.Date(Date, format = "%d/%m/%y"))
-d1718 <- mutate(d1718, Date = as.Date(Date, format = "%d/%m/%y"))
-d1819 <- mutate(d1819, Date = as.Date(Date, format = "%d/%m/%Y"))
-d1920 <- mutate(d1920, Date = as.Date(Date, format = "%d/%m/%Y"))
+################################
+# PROCESAMIENTO DE DATOS
+################################
 
-# Unimos de d1415S a d1819S
+## Una lista con todos los csv
+lista <- lapply(dir(), read.csv)
+lapply(lista, colnames) # Observamos sus columnas. No tienen el mismo orden
+lista <- lapply(lista, select, 
+                Date:FTR, BbMx.2.5, BbAv.2.5, BbMx.2.5.1,BbAv.2.5.1)
+                # Seleccionamos las columnas pertinentes
+lapply(lista, colnames) # Ahora son las mismas columnas
 
-d1019 <- rbind(d1011, d1112, d1213, d1314, d1415, d1516, d1617, d1718, d1819)
 
-# Renombrar columnas
-d1019 <- rename(d1019,  Max.2.5.O = BbMx.2.5, 
-                 Avg.2.5.O = BbAv.2.5, 
-                 Max.2.5.U = BbMx.2.5.1,
-                 Avg.2.5.U = BbAv.2.5.1)
+## Hacemos un solo Data Frame
+data <- do.call(rbind, lista)
 
-d1920 <- rename(d1920,  Max.2.5.O = Max.2.5, 
-                 Avg.2.5.O = Avg.2.5, 
-                 Max.2.5.U = Max.2.5.1,
-                 Avg.2.5.U = Avg.2.5.1)
+## Renombramos
+data <- rename(data, 
+               date = Date, 
+               home.team = HomeTeam, 
+               home.score = FTHG, 
+               away.team = AwayTeam, 
+               away.score = FTAG,
+               Max.2.5.o = BbMx.2.5,
+               Max.2.5.u = BbMx.2.5.1)
 
-# Ordenamos las columnas
-
-d1019 <- select(d1019, colnames(d1920))
-
-# Volvemos a unir
-
-d1020S <- rbind(d1019, d1920)
-
-# Renombramos
-
-d1020S <- rename(d1020S, date = Date, home.team = HomeTeam, home.score = FTHG, away.team = AwayTeam, away.score = FTAG)
-
-# Ordenamos columnas
-
-data <- select(d1020S, date, home.team, home.score, away.team, away.score:Avg.2.5.U) # Este data frame contiene todos los datos necesarios
-
+## Ordenamos columnas con datos finales
+colnames(data)
+data <- select(data, -FTR, -BbAv.2.5, -BbAv.2.5.1) 
 head(data, n = 2L); tail(data, n = 2L)
 
-# Data frames de partidos y equipos
-setwd('D:/Prohoff/git/BeduFinalR')
+## Arreglamos las fechas
+str(data) # Las fechas están en dd/mm/yy 28/08/10
+?strptime # %d %m %y
+data$date <- strptime(data$date, format = '%d/%m/%y')
+str(data)
+
+## Creamos CSV final, Data frames de partidos y equipos
+#setwd('D:/Prohoff/git/BeduFinalR')
+setwd("D:/OneDrive/Programación - Code/BEDU. Data Análisis/Fase 2/R/BeduFinalR")
 md <- data %>% select(date:away.score)
 write.csv(md, "match.data.csv", row.names = FALSE)
 df <- create.fbRanks.dataframes(scores.file = "match.data.csv")
 teams <- df$teams; scores <- df$scores
 
 head(teams, n = 2L); dim(teams); head(scores, n = 2L); dim(scores)
-####
+
 #### Tenemos 33 equipos y 3800 partidos desde el 2010 hasta el 2020
 ####
 
+
+################################
+# Hipótesis Equipo 18
+################################
+
+md0 <- md %>% mutate(result.home = ifelse(away.score>home.score,"L",ifelse(away.score<home.score,"W","T"))) %>% mutate(result.away = ifelse(away.score>home.score,"W",ifelse(away.score<home.score,"L","T")))
+md0
+md1 <- md0 %>% select(date,home.team,home.score,result.home)
+md1 <- md1 %>% mutate(position = "home")
+names(md1) <- c('date','team','score','result','position')
+head(md1)
+md2 <- md0 %>% select(date,away.team,away.score,result.away)
+md2 <- md2 %>% mutate(position = "away")
+names(md2) <- c('date','team','score','result','position')
+head(md2)
+md_new <- rbind(md1, md2)
+head(md_new, n = 2L)
+tail(md_new, n = 2L)
+
+win.home <- md_new %>%  filter(position == "home", result == "W") %>% group_by(team) %>% count(result) %>% select(-result)
+win.home
+
+win.away <- md_new %>%  filter(position == "away", result == "W") %>% group_by(team) %>% count(result) %>% select(-result)
+win.away
+
+tm <- md_new %>%  group_by(team) %>% count(result) %>% summarise(sum(n))
+names(tm) <- c('team','total')
+tm
+
+winrate <- merge(win.home, win.away, by="team")
+names(winrate) <- c('team', 'home', 'away')
+winrate <- merge(winrate, tm, by="team")
+names(winrate) <- c('team', 'home', 'away', 'total')
+winrate
+winrate <- winrate %>% mutate(wrh = home / total, wra = away / total)
+winrate
+
+wrh <- winrate$wrh
+wra <- winrate$wra
+
+par(mfrow = c(1, 3))  # 2 filas y 2 columnas
+
+hist(wrh,
+     main = "Tasa de Victoria como Local",
+     xlab = "% de Victoria",
+     ylab = "Frecuencia",
+     ylim = c(0,15),
+     col = "#FE8A68",
+     breaks = 10,
+     labels = TRUE)
+
+hist(wra,
+     main = "Tasa de Victoria como Visitante",
+     xlab = "% de Victoria",
+     ylab = "Frecuencia",
+     ylim = c(0,15),
+     col = "#FE8A68",
+     breaks = 10,
+     labels = TRUE)
+
+boxplot(wrh, wra, col = c("#FE8A68","#FD6A3E"), horizontal = TRUE, names = c("wrh","wra"))
+
+(mean.home = mean(wrh))
+(mean.away = mean(wra))
+(sd.home = sd(wrh))
+(sd.away = sd(wra))
+
+t.test(
+  wrh,
+  wra,
+  paired = FALSE,
+  alternative = "greater")
+
+
+
+################################
 # Conjuntos iniciales de entrenamiento y de prueba
+################################
+
 f <- scores$date # Fechas de partidos
 fu <- unique(f) # Fechas sin repetición
-#####
+
 ##### Hubo 1236 fechas en las que hubo partidos( en algunas fechas hubo varios partidos)
 #####
 Ym <- format(fu, "%Y-%m") # Meses y años
 Ym <- unique(Ym) # Meses y años sin repetir
-####
+
 #### Hubo partidos por 101 meses
 ####
 format(scores$date, "%Y-%m")
@@ -143,12 +213,13 @@ format(scores$date, "%Y-%m")
 ### No hay partidos entre los mese 06 y 07 en 2011 y 2012, 2014, 2015, 2016, 2017, 2018, 2019, ,
 ### en 2013 no hay partidos en en el mes 07
 ### en 2020 no hubo partidos en 04 y 05
+###
 
 ## Aqui se seleccionan los partidos de diciembre 2011-08 que fue el 15avo mes que jugaron
 places <- which(Ym[15]==format(scores$date, "%Y-%m")) # Consideramos partidos de 15 meses para comenzar a ajustar el modelo
 ffe <- scores$date[max(places)] # Fecha final conjunto de entrenamiento
 ### se jugó en diciembre 2011 hasta el dia 18
-
+###
 
 # Consideraremos partidos de 15 meses para comenzar a ajustar el modelo. Así, nuestro primer conjunto de entrenamiento consiste de datos de partidos hasta el `r ffe` 
 train <- scores %>% filter(date <= ffe) ## entrenamos desde el inicio del dataset hasta el 18 de dic de 2011
@@ -157,7 +228,11 @@ test <- scores %>% filter(date > ffe)   ## los datos posteriores a esa fecha, se
 head(train, n = 1); tail(train, n = 1)
 head(test, n = 1); tail(test, n = 1)
 
+
+
+################################
 # Primer ajuste del modelo
+################################
 
 traindate <- unique(train$date)
 testdate <- unique(test$date)
@@ -167,11 +242,15 @@ ranks <- rank.teams(scores = scores, teams = teams,
                     max.date = traindate[length(traindate)])
 ranks
 coef(ranks)
-#######
-####### le da una puntuacion al equipo por ataque defensa y total, y numero de partidos
+
+### le da una puntuacion al equipo por ataque defensa y total, y numero de partidos
+###
 
 
+################################
 # Primera predicción
+################################
+
 testdate[1]
 pred <- predict(ranks, date = testdate[1])
 
@@ -184,7 +263,7 @@ pas
 pht
 pat
 
-# Continuar ajustando y prediciendo
+## Continuar ajustando y prediciendo
 
 phs <- NULL; pas <- NULL; pht <- NULL; pat <- NULL
 for(i in 1:(length(unique(scores$date))-170)){
@@ -206,7 +285,7 @@ pas
 pht
 pat
 
-# Eliminamos NA's
+## Eliminamos NA's
 
 buenos <- !(is.na(phs) | is.na(pas)) # 
 phs <- phs[buenos] # predicted home score
@@ -224,14 +303,18 @@ mean(phs + pas < 2.5 & momio$home.score + momio$away.score < 2.5)
 hs <- momio$home.score
 as <- momio$away.score
 
-# Probabilidades condicionales
+## Probabilidades condicionales
 mean(phs + pas > 3) # proporción de partidos con más de tres goles según el modelo
 mean(phs + pas > 3 & hs + as > 2.5)/mean(phs + pas > 3) # probabilidad condicional estimada de ganar en over 2.5
 
 mean(phs + pas < 2.1) # proporción de partidos con menos de 2.1 goles según el modelo
 mean(phs + pas < 2.1 & hs + as < 2.5)/mean(phs + pas < 2.1) # probabilidad condicional estimada de ganar en under 2.5
 
+
+
+################################
 # Juegos con momios máximos
+################################
 
 cap <- 50000; g <- NULL
 
@@ -250,15 +333,19 @@ for(j in 1:length(phs)){
 }
 
 
+
+################################
 # Escenario con momios máximos
+################################
 g
 g <- data.frame(Num_Ap = 1:length(g), Capital = g)
-df_means <- (g)
+
+df_means <- dataframe(mean(g$Capital))
 df_means$mean <- (mean(g$Capital))
 df_means
 p <- ggplot(g, aes(x=Num_Ap, y=Capital)) +
-  geom_line( color="#FD6A3E") +
-  geom_point( color="#FE8A68") +
+  geom_line( color="green") +
+  geom_point( color="darkgreen") +
   labs(x = "Número de juego", 
        y = "Capital",
        title = "Realizando una secuencia de juegos") +
@@ -266,13 +353,17 @@ p <- ggplot(g, aes(x=Num_Ap, y=Capital)) +
   geom_hline(data=df_means, aes(yintercept=mean, color="Promedio"), linetype="dashed")+
   
   theme(legend.position="none")+
-  theme(axis.text.x = element_text(face = "bold", size = 10, angle = 25, hjust = 1),
-        axis.text.y = element_text(face = "bold", size = 10, angle = 25, hjust = 1))  # color, ángulo y estilo de las abcisas y ordenadas 
+  theme(axis.text.x = element_text(face = "bold", color="darkgreen" , size = 10, angle = 25, hjust = 1),
+        axis.text.y = element_text(face = "bold", color="darkgreen" , size = 10, angle = 25, hjust = 1))  # color, ángulo y estilo de las abcisas y ordenadas 
 p
 
 mean(g$Capital) #El capital promedio invertido en maximos es de 44881.79
 
+
+
+################################
 # Escenario con momios promedio
+################################
 
 cap <- 50000; g <- NULL
 
@@ -294,15 +385,15 @@ g <- data.frame(Num_Ap = 1:length(g), Capital = g)
 df_means$mean <- (mean(g$Capital))
 df_means 
 p <- ggplot(g, aes(x=Num_Ap, y=Capital)) + 
-  geom_line( color="#FE8A68") + 
-  geom_point(color="#FD6A3E") +
+  geom_line( color="green") + 
+  geom_point(color="darkgreen") +
   labs(x = "Número de juego", 
        y = "Capital",
        title = "Realizando una secuencia de juegos") +
 
   theme(plot.title = element_text(size=12))  +
-  theme(axis.text.x = element_text(face = "bold", size = 10, angle = 25, hjust = 1),
-        axis.text.y = element_text(face = "bold",  size = 10, angle = 25, hjust = 1))+
+  theme(axis.text.x = element_text(face = "bold", color="darkgreen" , size = 10, angle = 25, hjust = 1),
+        axis.text.y = element_text(face = "bold", color="darkgreen" , size = 10, angle = 25, hjust = 1))+
   geom_hline(data=df_means, aes(yintercept=mean, color="Promedio"), linetype="dashed")+
   
   theme(legend.position="none")
@@ -311,7 +402,12 @@ p
 
 mean(g$Capital) #El capital promedio invertido en promedio es de 29816.94
 
+
+
+################################
 #Paso 1 Planteamiento de hipotesis
+################################
+
 # h0 
 # h1
 hip <- 20000
@@ -373,7 +469,7 @@ bal
 bav <- match.data.csv.win %>% filter(home.team == "Barcelona")
 bav
 
-ranks
+
 goles_local <- match.data.csv %>% group_by(home.team) %>% summarise(goles_local = sum(home.score), .groups = 'drop')
 goles_visitante <- match.data.csv %>% group_by(away.team) %>% summarise(goles_visitante = sum(away.score), .groups = 'drop')
 
@@ -390,49 +486,5 @@ goles <- goles %>% mutate(contra = goles_visitante / goles_visitante_en_contra)
 goles <- goles %>% mutate(l = (goles_local+goles_visitante))
 goles <- goles %>% mutate(v = (goles_local_en_contra+goles_visitante_en_contra))
 goles <- goles %>% mutate(diferencia = (goles_local+goles_visitante)/(goles_local_en_contra+goles_visitante_en_contra))
-goles <- goles %>% mutate(diferencia_goles = (goles_local+goles_visitante)-(goles_local_en_contra+goles_visitante_en_contra))
-goles <- goles %>% mutate(diferencia_goles_lv = (goles_local-goles_visitante))
-goles <- goles %>% arrange(desc(diferencia_goles))
-
-
-
-
-##################################################################
-
-Ym[100]
-places <- which(Ym[100]==format(scores$date, "%Y-%m"))
-places
-eval <- match.data.csv.win[places,]
-
-
-bin <- seq(min(match.data.csv.win$diferencia), max(match.data.csv.win$diferencia), length.out = 16)
-ggplot(match.data.csv.win,aes(diferencia))+
-  geom_histogram(breaks=bin)+
-  theme(legend.position="left")+
-  labs(x = "goles", y = "Frecuencia") 
-
-mean(match.data.csv.win$diferencia)
-#Paso 1 Panteamiento de hipotesis
-# h0 el local pierda por diferencia de 1 gol o mas
-# h1 el local no pierda por diferencia de 1 gol o mas
-hip <- -1
-valores <- eval$diferencia
-#Paso 2 Calcular estadistico de prueba
-(media <-mean(valores))
-(ds <- sd(valores))
-(n <- length(valores))
-(t <- (media - hip)/(ds/sqrt(n)))
-(gl <- n-1)
-#Paso 3: Calcular P value
-pvalue <- pt(t,df = gl, lower.tail = T)
-pvalue
-
-#Paso 4: seleccionar nivel de confianza y concluir
-# Usualmente se definen niveles de significancia estandar: 0.1 0.05, 0.01
-# si PValue < significancia, se rechaza H_nula
-
-test <- t.test(x=valores, alternative = 'less', mu=hip)
-test$p.value
-test
-
-
+goles <- goles %>% arrange(desc(diferencia))
+goles
