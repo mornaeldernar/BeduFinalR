@@ -16,7 +16,7 @@ library(shinythemes)
 shinyUI(
   fluidPage(theme = "mytheme.css",
     dashboardPage(
-      dashboardHeader(title =  "Football"),
+      dashboardHeader(title =  "BEDU/DS Team 18"),
       dashboardSidebar(
         sidebarMenu(
           menuItem("Dashboard", tabName = "dashboard", icon = icon("dashboard")),
