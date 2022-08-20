@@ -468,6 +468,32 @@ bal <- match.data.csv.win %>% filter(home.team == "Barcelona")
 bal
 bav <- match.data.csv.win %>% filter(home.team == "Barcelona")
 bav
+datos <- match.data.csv.win %>% filter(home.team == "Real Madrid" | home.team == "Barcelona" | away.team == "Real Madrid" | away.team == "Barcelona" )
+rml <- match.data.csv.win %>% filter(home.team == "Real Madrid")
+rml
+rmv <- match.data.csv.win %>% filter(away.team == "Real Madrid")
+rmv
+bal <- match.data.csv.win %>% filter(home.team == "Barcelona")
+bal
+bav <- match.data.csv.win %>% filter(away.team == "Barcelona")
+bav
+
+
+
+
+rml$Ganador <- factor(rml$Ganador)
+rmv$Ganador <- factor(rmv$Ganador)
+
+bal$Ganador <- factor(bal$Ganador)
+bav$Ganador <- factor(bav$Ganador)
+
+summary(rml)
+summary(rmv)
+
+summary(bal)
+summary(bav)
+mean(c(mean(rml$home.score),mean(rmv$away.score)))
+mean(c(mean(bal$home.score),mean(bav$away.score)))
 
 
 goles_local <- match.data.csv %>% group_by(home.team) %>% summarise(goles_local = sum(home.score), .groups = 'drop')
@@ -488,3 +514,5 @@ goles <- goles %>% mutate(v = (goles_local_en_contra+goles_visitante_en_contra))
 goles <- goles %>% mutate(diferencia = (goles_local+goles_visitante)/(goles_local_en_contra+goles_visitante_en_contra))
 goles <- goles %>% arrange(desc(diferencia))
 goles
+
+

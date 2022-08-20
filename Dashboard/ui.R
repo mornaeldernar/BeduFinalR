@@ -32,30 +32,7 @@ shinyUI(
           tabItem(tabName= "dashboard",
                 fluidRow(
                   titlePanel("Goles a favor y en contra por equipo"),
-                  box(title ="Ganadores como local",
-                      fluidRow(
-                        column(5),
-                        column(2,h3(textOutput("win_local"))),
-                        column(5)
-                      ),
-                      background = "green",
-                  ),
-                  box(title ="Ganadores como visitante",
-                      fluidRow(
-                        column(5),
-                        column(2,h3(textOutput("win_visitante"))),
-                        column(5)
-                      ),
-                      background = "green",
-                  ),
-                  box(title ="Empates",
-                      fluidRow(
-                        column(5),
-                        column(2,h3(textOutput("win_empate"))),
-                        column(5)
-                      ),
-                      background = "green",
-                  ),
+                  
                   box(
                     selectInput("x", "Seleccione los goles",
                                 choices = c("local" = "home.score", "visitante" = "away.score")),
@@ -68,6 +45,14 @@ shinyUI(
                     status="primary",
                     solidHeader = TRUE,
                     plotOutput("output_plot")
+                  ),
+                  
+                  box(
+                    title = "Distribución de partidos ganados",
+                    width = 12,
+                    status="primary",
+                    solidHeader = TRUE,
+                    plotOutput("pie_plot")
                   ),
                 ),
           ),
@@ -100,13 +85,24 @@ shinyUI(
                       img(src = "momios_promedio.png",height=300,width="100%"),status="warning"),
                   box(title=("Factores de ganancia máximo"),
                       img(src = "momios_maximo.png",height=300,width="100%"), status="danger"),
+                  box(width=12,
+                    p("El comportamiento del capital invertido de acuerdo a las variables"),
+                    p("Scores predecidos (Predicted Home Score/Predicted Away Score)"),
+                    p("Anotados (Home Score/Away Score)"),
+                    p("Momios promedio (gráfica izquierda)"),
+                    p("Momios máximos (gráfica derecha)"),
+                    p("No refleja tendencia alguna, se observa que lo valores no fluctuan de manera uniforme 
+al rededor de la media."),
+p("Además, se observa que no capta estacionalidad, ya que no se repite periódicamente 
+un mismo patrón sistemático."))
                 )
           ),
           
           tabItem(tabName = "hipotesis",
                 fluidRow(
                   titlePanel("Prueba de hipótesis"),
-                  box(title=("Factores de ganancia máximo"),
+                  box(width=12,
+                    title=("Factores de ganancia máximo"),
                       img(src = "winratecharts.png",height=300,width="100%"), status="danger"),
                   box(
                       img(src = "codigo.png",height=300,width="100%"), status="danger"),
@@ -115,11 +111,11 @@ shinyUI(
           tabItem(tabName = "equipo",
               fluidRow(
                 titlePanel("Equipo"),
-                box(title=("Alef Zain Gama Sandoval")),
+                box(title=("Alef Gama")),
                 box(title=("Arturo Solís")),
                 box(title=("Jacob Muñoz")),
                 box(title=("Javier Castillo")),
-                box(title=("Rafael Jimenez Orozco"))
+                box(title=("Rafael Jiménez"))
               )
           )
         )

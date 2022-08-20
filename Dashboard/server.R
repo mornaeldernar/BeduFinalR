@@ -13,6 +13,7 @@ library(dplyr)                             # Install and load formattable
                                  # Install and load scales
 library("scales")
 
+
 shinyServer(function(input, output) {
   #Cargamos los datos
   match.data.csv <- read.csv("./www/match.data.csv", header = TRUE)
@@ -34,6 +35,17 @@ shinyServer(function(input, output) {
       facet_wrap(vars(away.team))+
       theme(legend.position="left")+
       labs(x = input$x, y = "Frecuencia") 
+  })
+  output$pie_plot <- renderPlot({
+    valores <- data.frame("Ganador" = c("Ganador Visitante","Ganador Local","Empates"),
+      "valores" = c(round(visitantes / (visitantes+empates+locales),2),round(locales  / (visitantes+empates+locales),2),round(empates  / (visitantes+empates+locales),2)))
+    
+    ggplot(valores,aes(x="", y=valores, fill=Ganador)) +
+      geom_bar(stat="identity",width=1)+
+      coord_polar("y",start=0)+
+      geom_text(aes(label = paste0(valores*100, "%")), position = position_stack(vjust=0.5)) +
+      theme_void()+
+      scale_fill_manual(values=c("#FCE5DE", "#FE8A68", "#FD6A3E"))
   })
   output$win_visitante <- renderText({
     scales::percent(round(visitantes / (visitantes+empates+locales),2))
