@@ -2,8 +2,13 @@
 # INSTALAR Y EJECUTAR LIBRERI-AS
 ################################
 install.packages("remotes")
-library(remotes)
+install.packages('scales')
+install.packages('reshape2')
 install_github("cran/fbRanks")
+
+library(reshape2) # Para función melt
+library(scales) #para función percent
+library(remotes)
 library(fbRanks)
 library(dplyr)
 library(ggplot2)
@@ -16,7 +21,7 @@ library(ggplot2)
 
 #setwd("D:/Prohoff/git/BeduFinalR")
 setwd("D:/OneDrive/Programación - Code/BEDU. Data Análisis/Fase 2/R/BeduFinalR")
-
+dir.create('data')
 
 
 ################################
@@ -124,42 +129,117 @@ head(teams, n = 2L); dim(teams); head(scores, n = 2L); dim(scores)
 # Hipótesis Equipo 18
 ################################
 
+## Añadimos columnas de resultado del partido
 md0 <- md %>% mutate(result.home = ifelse(away.score>home.score,"L",ifelse(away.score<home.score,"W","T"))) %>% mutate(result.away = ifelse(away.score>home.score,"W",ifelse(away.score<home.score,"L","T")))
 md0
+
+## Local
 md1 <- md0 %>% select(date,home.team,home.score,result.home)
 md1 <- md1 %>% mutate(position = "home")
 names(md1) <- c('date','team','score','result','position')
 head(md1)
+
+## Visitante
 md2 <- md0 %>% select(date,away.team,away.score,result.away)
 md2 <- md2 %>% mutate(position = "away")
 names(md2) <- c('date','team','score','result','position')
 head(md2)
+
+## Unimos ambos
 md_new <- rbind(md1, md2)
 head(md_new, n = 2L)
 tail(md_new, n = 2L)
 
+## Ganadores locales
 win.home <- md_new %>%  filter(position == "home", result == "W") %>% group_by(team) %>% count(result) %>% select(-result)
 win.home
 
+## Ganadores visitantes
 win.away <- md_new %>%  filter(position == "away", result == "W") %>% group_by(team) %>% count(result) %>% select(-result)
 win.away
 
+## Partidos jugados totales
 tm <- md_new %>%  group_by(team) %>% count(result) %>% summarise(sum(n))
 names(tm) <- c('team','total')
 tm
 
+## Combinamos y actualizamos nombres
 winrate <- merge(win.home, win.away, by="team")
 names(winrate) <- c('team', 'home', 'away')
 winrate <- merge(winrate, tm, by="team")
+## Nueva columna total
+## wrh <- win rate home
+## wra <- win rate away
 names(winrate) <- c('team', 'home', 'away', 'total')
-winrate
 winrate <- winrate %>% mutate(wrh = home / total, wra = away / total)
 winrate
+
+
+
+################################
+# Gráficas primarias
+################################
+
+ggplot(data=winrate, aes(x=reorder(team,-wrh), y=wrh)) +
+  geom_bar(stat="identity", position=position_dodge(), fill = "#FD6A3E") +
+  scale_x_discrete(guide = guide_axis(n.dodge=2)) +
+  geom_text(aes(label = percent(wrh)), position=position_dodge(width=1.5), vjust=-0.25 , size = 3, angle = 0) +
+  theme(text = element_text(size = 10))
+
+ggplot(data=winrate, aes(x=reorder(team,-wrh), y=wrh)) +
+  ggtitle("Tasa de Victoria como Local") + 
+  geom_bar(stat="identity", position=position_dodge(), fill = "#FD6A3E") +
+  scale_x_discrete(guide = guide_axis(n.dodge=2)) +
+  geom_text(aes(label = percent(wrh)), position=position_dodge(width=1.5), vjust=-0.25 , size = 3, angle = 0) +
+  theme(text = element_text(size = 10))
+
+## Usamos función melt, para despivotar
+mlt <- winrate
+mlt
+# Para mostrar mejor en la gráfica
+names(mlt) <- c('team','partidos local','partidos visitante','total','Local','Visitante')
+mlt
+mlt <- melt(mlt) %>% filter(variable %in% c("Local","Visitante"))
+names(mlt) <- c("team","Ubicación","rate")
+mlt
+
+
+
+################################
+# Tasa de victoria por equipo y como local o visitante
+################################
+
+ggplot(data=mlt, aes(x=reorder(team,-rate), y=rate, col=Ubicación, fill=Ubicación, xlab="Equipo por Ubicación", ylab="")) +
+  labs(x = "Equipos por Ubicación", y = "Tasa de Victoria") +
+  geom_bar(stat="identity", position=position_dodge()) +
+  scale_x_discrete(guide = guide_axis(n.dodge=3)) +
+  theme(text = element_text(size = 10)) +
+  theme_dark() +
+  geom_text(aes(label = percent(  round(rate, digits = 2) ) ), vjust = 0, angle = 90, colour = "white", size = 4) +
+  scale_fill_manual(values=c("#FD6A3E","#FE8A68"))
+
+md_new
+g <- md_new %>%  group_by(team) %>% summarise(mean(score))
+names(g) <- c('Equipo','Goleo')
+g
+
+ggplot(data=g, aes(x=reorder(Equipo,-Goleo), y=Goleo)) +
+  ggtitle("Promedio de Goles por Partido") + 
+  geom_bar(stat="identity", position=position_dodge(), fill = "#FD6A3E") +
+  scale_x_discrete(guide = guide_axis(n.dodge=2)) +
+  geom_text(aes(label = round(Goleo, digits = 1)), position=position_dodge(width=1.5), vjust=-0.25 , size = 4, angle = 0) +
+  theme(text = element_text(size = 10))
+
 
 wrh <- winrate$wrh
 wra <- winrate$wra
 
+################################
+# GRÁFICAS FINALES
+################################
+
 par(mfrow = c(1, 3))  # 2 filas y 2 columnas
+
 
 hist(wrh,
      main = "Tasa de Victoria como Local",
@@ -186,11 +266,17 @@ boxplot(wrh, wra, col = c("#FE8A68","#FD6A3E"), horizontal = TRUE, names = c("wr
 (sd.home = sd(wrh))
 (sd.away = sd(wra))
 
+################################
+# t-test en la muestra de los 15 meses analizados
+################################
+
 t.test(
   wrh,
   wra,
-  paired = FALSE,
-  alternative = "greater")
+  paired = TRUE)
+
+
+
 
 
 
@@ -468,32 +554,6 @@ bal <- match.data.csv.win %>% filter(home.team == "Barcelona")
 bal
 bav <- match.data.csv.win %>% filter(home.team == "Barcelona")
 bav
-datos <- match.data.csv.win %>% filter(home.team == "Real Madrid" | home.team == "Barcelona" | away.team == "Real Madrid" | away.team == "Barcelona" )
-rml <- match.data.csv.win %>% filter(home.team == "Real Madrid")
-rml
-rmv <- match.data.csv.win %>% filter(away.team == "Real Madrid")
-rmv
-bal <- match.data.csv.win %>% filter(home.team == "Barcelona")
-bal
-bav <- match.data.csv.win %>% filter(away.team == "Barcelona")
-bav
-
-
-
-
-rml$Ganador <- factor(rml$Ganador)
-rmv$Ganador <- factor(rmv$Ganador)
-
-bal$Ganador <- factor(bal$Ganador)
-bav$Ganador <- factor(bav$Ganador)
-
-summary(rml)
-summary(rmv)
-
-summary(bal)
-summary(bav)
-mean(c(mean(rml$home.score),mean(rmv$away.score)))
-mean(c(mean(bal$home.score),mean(bav$away.score)))
 
 
 goles_local <- match.data.csv %>% group_by(home.team) %>% summarise(goles_local = sum(home.score), .groups = 'drop')
@@ -514,5 +574,3 @@ goles <- goles %>% mutate(v = (goles_local_en_contra+goles_visitante_en_contra))
 goles <- goles %>% mutate(diferencia = (goles_local+goles_visitante)/(goles_local_en_contra+goles_visitante_en_contra))
 goles <- goles %>% arrange(desc(diferencia))
 goles
-
-
