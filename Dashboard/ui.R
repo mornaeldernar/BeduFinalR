@@ -107,6 +107,11 @@ tabItem(tabName = "hipotesis",
               img(src = "winratecharts.png",height=300,width="100%"), status="primary"),
           box(
             img(src = "codigo.png",height=300,width="100%"), status="primary"),
+          box(
+            title=("Análisis"),
+            solidHeader = T,
+            status="primary",
+            p("De acuerdo con el análisis se puede afirmar que Jugar como local o visitante tiene influencia sobre la tasa de victoria dado que p-value < Nivel de significancia."))
         )
 ),
 
@@ -117,7 +122,7 @@ tabItem(tabName = "hayazgos",
               title=("Rate de victorias como local y como visitante"),
               status="primary",
               solidHeader = TRUE,
-              img(src = "winrateslocation.png",height=300,width="100%")),
+              img(src = "winratebarcelona.png",height=300,width="100%")),
           box(width=6,
               title=("Goles por partido"),
               status="primary",

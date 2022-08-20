@@ -19,8 +19,8 @@ library(ggplot2)
 # SITUAR DIRECTORIO DE TRABAJO
 ################################
 
-#setwd("D:/Prohoff/git/BeduFinalR")
-setwd("D:/OneDrive/Programación - Code/BEDU. Data Análisis/Fase 2/R/BeduFinalR")
+setwd("D:/Prohoff/git/BeduFinalR")
+#setwd("D:/OneDrive/Programación - Code/BEDU. Data Análisis/Fase 2/R/BeduFinalR")
 dir.create('data')
 
 
@@ -56,8 +56,8 @@ download.file("https://www.football-data.co.uk/mmz4281/1920/SP1.csv",
 ################################
 
 ## Cambiar directorio
-#setwd("D:/Prohoff/git/BeduFinalR/data")
-setwd("D:/OneDrive/Programación - Code/BEDU. Data Análisis/Fase 2/R/BeduFinalR/data")
+setwd("D:/Prohoff/git/BeduFinalR/data")
+#setwd("D:/OneDrive/Programación - Code/BEDU. Data Análisis/Fase 2/R/BeduFinalR/data")
 
 ## Corregir nombres de columnas del último archivo para que sean iguales
 ##    CUIDADO al correr el código sobre el csv ya previamente modificado
