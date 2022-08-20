@@ -83,7 +83,9 @@ frecuencia.local <- frecuencia.local %>% rename(goles = Var1, FRel = Freq)
 tail(frecuencia.local)
 p <- ggplot(frecuencia.local, aes(x = goles, y = FRel)) + 
   geom_bar (stat="identity", fill = '#FE8A68') +
-  ggtitle('Equipo Local')
+  ggtitle('Equipo Local') +
+  theme_dark()
+  
 p
 frecuencia.visitante <- as.data.frame(frecuencia.visitante)
 frecuencia.visitante <- rename(frecuencia.visitante, goles = Var1, FRel = Freq)
