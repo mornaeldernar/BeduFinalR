@@ -107,8 +107,7 @@ head(data, n = 2L); tail(data, n = 2L)
 
 ## Arreglamos las fechas
 str(data) # Las fechas están en dd/mm/yy 28/08/10
-?strptime # %d %m %y
-data$date <- strptime(data$date, format = '%d/%m/%y')
+data$date <- as.Date(data$date, format = '%d/%m/%y')
 str(data)
 
 ## Creamos CSV final, Data frames de partidos y equipos
