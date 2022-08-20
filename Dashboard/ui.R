@@ -144,11 +144,11 @@ tabItem(tabName = "hayazgos",
           tabItem(tabName = "equipo",
               fluidRow(
                 titlePanel("Equipo"),
-                box(title=("Alef Gama"),img(src = "alef.png",height=150,width="100%")),
-                box(title=("Arturo Solís"),img(src = "arturo.jpg",height=150,width="100%")),
-                box(title=("Jacob Muñoz"),img(src = "jacob.jpg",height=150,width="100%")),
-                box(title=("Javier Castillo"),img(src = "javier.jpg",height=150,width="100%")),
-                box(title=("Rafael Jiménez"),img(src = "rafa.jpg",height=150,width="100%"))
+                box(title=("Alef Gama"),img(src = "Alef.png",width="100%")),
+                box(title=("Arturo Solís"),img(src = "Arturo2.png",width="100%")),
+                box(title=("Jacob Muñoz"),img(src = "Jacob.png",width="100%")),
+                box(title=("Javier Castillo"),img(src = "Javier.png",width="100%")),
+                box(title=("Rafael Jiménez"),img(src = "Rafa.png",width="100%"))
               )
           )
         )
