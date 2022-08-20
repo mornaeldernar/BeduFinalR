@@ -111,7 +111,9 @@ tabItem(tabName = "hipotesis",
             title=("Análisis"),
             solidHeader = T,
             status="primary",
-            p("De acuerdo con el análisis se puede afirmar que Jugar como local o visitante tiene influencia sobre la tasa de victoria dado que p-value < Nivel de significancia."))
+            p("De acuerdo con el análisis se puede afirmar que Jugar como local o visitante tiene influencia sobre la tasa de victoria dado que p-value < Nivel de significancia."),
+            p("Por lo tanto se rechaza H0"),
+            p("Se puede observar, además, en las gráficas de caja y bigotes, que existe diferencia significativa entre jugar como local o visitante."))
         )
 ),
 
@@ -142,11 +144,11 @@ tabItem(tabName = "hayazgos",
           tabItem(tabName = "equipo",
               fluidRow(
                 titlePanel("Equipo"),
-                box(title=("Alef Gama")),
-                box(title=("Arturo Solís")),
-                box(title=("Jacob Muñoz")),
-                box(title=("Javier Castillo")),
-                box(title=("Rafael Jiménez"))
+                box(title=("Alef Gama"),img(src = "alef.png",height=150,width="100%")),
+                box(title=("Arturo Solís"),img(src = "arturo.jpg",height=150,width="100%")),
+                box(title=("Jacob Muñoz"),img(src = "jacob.jpg",height=150,width="100%")),
+                box(title=("Javier Castillo"),img(src = "javier.jpg",height=150,width="100%")),
+                box(title=("Rafael Jiménez"),img(src = "rafa.jpg",height=150,width="100%"))
               )
           )
         )
